@@ -37,17 +37,8 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
-          children: const <Widget>[ // todo : test widgets
-            EllipsisText(
-              style: TextStyle(color: Colors.black, fontSize: 16),
-              text: "위젯 테스트 문구입니다. 위젯 테스트 문구입니다. 위젯 테스트 문구입니다. 위젯 테스트 문구입니다. 위젯 테스트 문구입니다. 위젯 테스트 문구입니다. 위젯 테스트 문구입니다. 위젯 테스트 문구입니다. 위젯 테스트 문구입니다. 위젯 테스트 문구입니다. 위젯 테스트 문구입니다. "
-                  "위젯 테스트 문구입니다. 위젯 테스트 문구입니다. 위젯 테스트 문구입니다. 위젯 테스트 문구입니다. 위젯 테스트 문구입니다. 위젯 테스트 문구입니다. 위젯 테스트 문구입니다. 위젯 테스트 문구입니다. 위젯 테스트 문구입니다. 위젯 테스트 문구입니다. 위젯 테스트 문구입니다.",
-              ellipsis: "..더보기",
-              maxLines: 2,
-              isShowMore: true,
-              splashFactory: NoSplash.splashFactory,
-            ),
-
+          children: const <Widget>[
+            // todo : test widgets
           ],
         ),
       ),
