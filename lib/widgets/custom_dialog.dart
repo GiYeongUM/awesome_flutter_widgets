@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class CustomDialog extends StatelessWidget {
-  final String? title;
+  final String title;
   final String? content;
   final Widget? widgets;
   final bool? canGoBack;
@@ -14,7 +14,7 @@ class CustomDialog extends StatelessWidget {
 
   const CustomDialog(
       {Key? key,
-      this.title,
+      required this.title,
       this.content,
       this.widgets = const Text(""),
       this.canGoBack = true,
@@ -40,7 +40,7 @@ class CustomDialog extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
-                title!,
+                title,
                 style: titleStyle,
               ),
               SizedBox(
