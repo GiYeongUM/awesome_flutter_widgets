@@ -43,11 +43,14 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
-      floatingActionButton: const CustomFAB(
+      floatingActionButton: CustomFAB(
         firstButtonIcon: Icons.add_photo_alternate_outlined,
         secondButtonIcon: Icons.camera_alt,
         thirdButtonIcon: Icons.delete,
         thirdIconColor: Colors.red,
+        firstOnClick: (){print("first");},
+        secondOnClick: (){print("second");},
+        thirdOnClick: (){print("third");},
       ),
     );
   }

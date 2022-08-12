@@ -13,6 +13,9 @@ class CustomFAB extends StatefulWidget {
     this.secondIconColor,
     this.thirdButtonColor,
     this.thirdIconColor,
+    required this.firstOnClick,
+    required this.secondOnClick,
+    required this.thirdOnClick,
   }) : super(key: key);
 
   final Color? primaryColor;
@@ -25,6 +28,9 @@ class CustomFAB extends StatefulWidget {
   final Color? secondIconColor;
   final Color? thirdButtonColor;
   final Color? thirdIconColor;
+  final Function() firstOnClick;
+  final Function() secondOnClick;
+  final Function() thirdOnClick;
 
   @override
   State<CustomFAB> createState() => _CustomFABState();
@@ -112,6 +118,8 @@ class _CustomFABState extends State<CustomFAB> with SingleTickerProviderStateMix
                           child: InkWell(
                             onTap: () {
                               if (_angle == 45.0) {
+                                widget.firstOnClick();
+                                _rotate();
                               }
                             },
                             child:  Center(
@@ -159,6 +167,8 @@ class _CustomFABState extends State<CustomFAB> with SingleTickerProviderStateMix
                           child: InkWell(
                             onTap: () {
                               if (_angle == 45.0) {
+                                widget.secondOnClick();
+                                _rotate();
                               }
                             },
                             child: Center(
@@ -206,6 +216,7 @@ class _CustomFABState extends State<CustomFAB> with SingleTickerProviderStateMix
                           child: InkWell(
                             onTap: () {
                               if (_angle == 45.0) {
+                                widget.thirdOnClick();
                                 _rotate();
                               }
                             },
