@@ -1,5 +1,6 @@
-import 'package:awesome_flutter_widgets/widgets/ellipsis_text.dart';
+import 'package:awesome_flutter_widgets/widgets/custom_fab.dart';
 import 'package:flutter/material.dart';
+
 
 void main() {
   runApp(const MyApp());
@@ -41,6 +42,12 @@ class _MyHomePageState extends State<MyHomePage> {
             // todo : test widgets
           ],
         ),
+      ),
+      floatingActionButton: const CustomFAB(
+        firstButtonIcon: Icons.add_photo_alternate_outlined,
+        secondButtonIcon: Icons.camera_alt,
+        thirdButtonIcon: Icons.delete,
+        thirdIconColor: Colors.red,
       ),
     );
   }
