@@ -7,21 +7,31 @@ class CustomDialog extends StatelessWidget {
   final bool? canGoBack;
   final double? radius;
   final double? insetPadding;
-  final double? titleGap;
-  final double? buttonGap;
+  final double? topToTitleGap;
+  final double? titleToContentGap;
+  final double? contentToButtonGap;
+  final double? buttonToBottomGap;
   final TextStyle? titleStyle;
   final TextStyle? contentStyle;
+  final Color? defaultButtonBackColor;
+  final Color? defaultButtonTextColor;
 
   const CustomDialog(
       {Key? key,
       required this.title,
       this.content,
-      this.widgets = const Text(""),
+      this.widgets,
       this.canGoBack = true,
       this.insetPadding,
       this.titleStyle,
       this.radius,
-      this.contentStyle, this.buttonGap, this.titleGap})
+      this.contentStyle,
+      this.contentToButtonGap,
+      this.titleToContentGap,
+      this.topToTitleGap,
+      this.buttonToBottomGap,
+      this.defaultButtonBackColor,
+      this.defaultButtonTextColor})
       : super(key: key);
 
   @override
@@ -39,12 +49,15 @@ class CustomDialog extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              SizedBox(
+                height: topToTitleGap ?? 24,
+              ),
               Text(
                 title,
                 style: titleStyle,
               ),
               SizedBox(
-                height: titleGap ?? 32,
+                height: titleToContentGap ?? 32,
               ),
               content == null
                   ? Container()
@@ -54,9 +67,34 @@ class CustomDialog extends StatelessWidget {
                       style: contentStyle,
                     ),
               SizedBox(
-                height: buttonGap ?? 32,
+                height: contentToButtonGap ?? 40,
               ),
-              widgets!,
+              widgets ??
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: defaultButtonBackColor ?? Colors.black,
+                        borderRadius: const BorderRadius.only(
+                            bottomLeft: Radius.circular(8.0),
+                            bottomRight: Radius.circular(8.0)),
+                      ),
+                      height: 40,
+                      width: double.infinity,
+                      child: Center(
+                        child: Text(
+                          "확인",
+                          style: TextStyle(
+                              color: defaultButtonTextColor ?? Colors.white),
+                        ),
+                      ),
+                    ),
+                  ),
+              // SizedBox(
+              //   height: buttonToBottomGap ?? 16,
+              // ),
             ],
           ),
         ),

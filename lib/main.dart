@@ -1,4 +1,6 @@
+import 'package:awesome_flutter_widgets/widgets/custom_dialog.dart';
 import 'package:awesome_flutter_widgets/widgets/custom_fab.dart';
+import 'package:awesome_flutter_widgets/widgets/ellipsis_text.dart';
 import 'package:flutter/material.dart';
 
 
@@ -34,23 +36,24 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Center(
+      body: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
         child: Column(
           mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: const <Widget>[
             // todo : test widgets
+            // EllipsisText(
+            //   style: TextStyle(color: Colors.black, fontSize: 16),
+            //   text: "위젯 테스트 문구입니다. 위젯 테스트 문구입니다. 위젯 테스트 문구입니다. 위젯 테스트 문구입니다. 위젯 테스트 문구입니다. 위젯 테스트 문구입니다. 위젯 테스트 문구입니다. 위젯 테스트 문구입니다. 위젯 테스트 문구입니다. 위젯 테스트 문구입니다. 위젯 테스트 문구입니다. "
+            //       "위젯 테스트 문구입니다. 위젯 테스트 문구입니다. 위젯 테스트 문구입니다. 위젯 테스트 문구입니다. 위젯 테스트 문구입니다. 위젯 테스트 문구입니다. 위젯 테스트 문구입니다. 위젯 테스트 문구입니다. 위젯 테스트 문구입니다. 위젯 테스트 문구입니다. 위젯 테스트 문구입니다.",
+            //   ellipsis: "..더보기",
+            //   maxLines: 2,
+            //   isShowMore: true,
+            //   splashFactory: NoSplash.splashFactory,
+            // ),
           ],
         ),
-      ),
-      floatingActionButton: CustomFAB(
-        firstButtonIcon: Icons.add_photo_alternate_outlined,
-        secondButtonIcon: Icons.camera_alt,
-        thirdButtonIcon: Icons.delete,
-        thirdIconColor: Colors.red,
-        firstOnClick: (){print("first");},
-        secondOnClick: (){print("second");},
-        thirdOnClick: (){print("third");},
       ),
     );
   }
