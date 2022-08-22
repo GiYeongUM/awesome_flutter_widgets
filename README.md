@@ -10,3 +10,4 @@ main.dart 에서 테스트
 2. custom_dialog : flutter 기본 다이얼로그를 컴포넌트화 하여 제목 하나만 넣고 활용 할 수 있는 위젯
 3. nhn_payment_view_widget : NHN 사이버 결제 모듈을 웹뷰로 연동하여 간단하게 결제 모듈을 붙일 수 있는 위젯
 4. custom_fab : FAB의 버튼을 여러개로 분할되어 선택할 수 있게 하는 위젯
+5. util : 각종 정규표현식, n시간전 - n일전 등 이전시간 계산 함수, thousandToK - 1000 단위를 K 표가로 바꿔주는 함수
