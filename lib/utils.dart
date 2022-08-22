@@ -7,14 +7,13 @@ import 'package:intl/intl.dart';
     return RegExp("^[ㄱ-ㅎ가-힣0-9a-zA-Z ]{$min,$max}\$").hasMatch(nickName.trim());
   }
 
-  // checkSMSCodeRegex({required String code}) {
-  //   return GetUtils.isLengthEqualTo(code, 6);
-  // }
+  checkSMSCodeRegex({required String code, required int length}) {
+    return RegExp("^[0-9]{$length}\$").hasMatch(code);
+  }
 
-  // static bool checkPasswordRegex({required String password}) {
-  //   String regex = r"^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&.])[A-Za-z\d$@$!%*#?&.]{8,20}$";
-  //   return GetUtils.hasMatch(password, regex);
-  // }
+  checkPasswordRegex({required String password, required int min, required int max}) {
+    return RegExp('^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[@!%*#?~^,.&+=])[A-Za-z0-9@!%*#?~^,.&+=]{$min,$max}\$').hasMatch(password);
+  }
 
   timeAgo({required DateTime dateTime,bool numericDates = true}) {
     final dateNow = DateTime.now();
