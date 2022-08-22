@@ -1,16 +1,13 @@
 import 'package:intl/intl.dart';
 
-
-
-
   checkEmailRegex({required String email}) {
     return RegExp(r"^[a-zA-Z\d.a-zA-Z\d.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z\d]+\.[a-zA-Z]+").hasMatch(email);
   }
   checkNickNameRegex({required String nickName, required int min, required int max}) {
-    return RegExp(r'\\w[a-zA-Z가-힣\d]{"$min","$max"}\$').hasMatch(nickName);
+    return RegExp("^[ㄱ-ㅎ가-힣0-9a-zA-Z ]{$min,$max}\$").hasMatch(nickName.trim());
   }
 
-  // static bool checkSMSCodeRegex({required String code}) {
+  // checkSMSCodeRegex({required String code}) {
   //   return GetUtils.isLengthEqualTo(code, 6);
   // }
 
