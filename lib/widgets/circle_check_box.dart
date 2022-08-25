@@ -19,7 +19,6 @@ class _CircleCheckBoxState extends State<CircleCheckBox> {
   void initState() {
     super.initState();
   }
-  // const Color(0xffA0A6BB)
 
   @override
   Widget build(BuildContext context) {

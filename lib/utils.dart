@@ -1,6 +1,8 @@
-import 'package:intl/intl.dart';
+// import 'package:intl/intl.dart';
 
-  /// 이메일 정규표현식
+  import 'dart:math';
+
+/// 이메일 정규표현식
   checkEmailRegex({required String email}) {
     return RegExp(r"^[a-zA-Z\d.a-zA-Z\d.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z\d]+\.[a-zA-Z]+").hasMatch(email);
   }
@@ -43,15 +45,58 @@ import 'package:intl/intl.dart';
     }
   }
 
-  /// 1000 이상의 수 를 n K 로 바꿔주는 함수
-  thousandToK (int value) {
-    if(value > 999){
-      double temp = value / 1000;
-      var result = NumberFormat("###,###,###.#### k");
-      return result.format(temp);
-    } else {
-      return value.toString();
-    }
-  }
+  /// 1000 이상의 수 를 n K,M,B ... 로 바꿔주는 함수
+  thousandToK(int value) {
 
+    if (value < 1000) return value.toString();
+
+    if (value < 10000) {
+      final s = (value / 1000).toStringAsFixed(1);
+      if (s[s.length - 1] == '0') {
+        return s.substring(0, s.length - 2) + "K";
+      }
+      return s + "K";
+    }
+    if (value < 1000000) {
+      return (value / 1000).toStringAsFixed(1) + "K";
+    }
+
+    if (value < 10000000) {
+      final s = (value / pow(1000, 2)).toStringAsFixed(1);
+      if (s[s.length - 1] == '0') {
+        return s.substring(0, s.length - 2) + "M";
+      }
+      return s + "M";
+    }
+
+    if (value < 1000000000) {
+      return (value / pow(1000, 2)).toStringAsFixed(1) + "M";
+    }
+
+    if (value < 10000000000) {
+      final s = (value / pow(1000, 3)).toStringAsFixed(1);
+      if (s[s.length - 1] == '0') {
+        return s.substring(0, s.length - 2) + "B";
+      }
+      return s + "B";
+    }
+
+    if (value < 1000000000000) {
+      return (value / pow(1000, 3)).toStringAsFixed(1) + "B";
+    }
+
+    if (value < 10000000000000) {
+      final s = (value / pow(1000, 4)).toStringAsFixed(1);
+      if (s[s.length - 1] == '0') {
+        return s.substring(0, s.length - 2) + "T";
+      }
+      return s + "T";
+    }
+
+    if (value < 1000000000000000) {
+      return (value / pow(1000, 4)).toStringAsFixed(1) + "T";
+    }
+
+    return (value / pow(1000, 5)).toStringAsFixed(1) + "Q";
+  }
 
