@@ -14,7 +14,7 @@ import 'package:flutter/services.dart';
 /// url에 결제요청 url 연동하면 완료
 
 class PaymentViewWidget extends StatelessWidget {
-  PaymentViewWidget(
+  const PaymentViewWidget(
       {Key? key, required this.url}) : super(key: key);
 
   final String url;
