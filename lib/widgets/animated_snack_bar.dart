@@ -1,13 +1,19 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+enum SnackBarType {
+  saveFirstAnimation,
+  saveSecondAnimation,
+  failFirstAnimation,
+  failSecondAnimation,
 
+}
 class AnimatedSnackBar {
   static style1({
     required BuildContext context,
-    String? title,
+    String? label,
     Color primaryColor = Colors.green,
-    Color backgroundColor = Colors.green,
+    required SnackBarType snackBarType,
     String? subTitle,
     String? actionLabel,
     TextStyle? titleTextStyle,
@@ -22,62 +28,60 @@ class AnimatedSnackBar {
     DismissDirection? direction,
     bool? hasLabel,
   }) {
-    return ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        duration: duration ?? const Duration(seconds: 3),
-        dismissDirection: direction ?? DismissDirection.down,
-        behavior: SnackBarBehavior.fixed,
-        backgroundColor: Colors.transparent,
-        onVisible: () async {
+    switch (snackBarType){
+      case SnackBarType.saveFirstAnimation:
+        return ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          duration: duration ?? const Duration(seconds: 3),
+          dismissDirection: direction ?? DismissDirection.down,
+          behavior: SnackBarBehavior.fixed,
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          content: SaveSnackBarFirstWidget(onPressed: () {
+            ScaffoldMessenger.of(context).clearSnackBars();
+          },
+            label: label ?? "",
+            primaryColor: primaryColor,
+            titleTextStyle: titleTextStyle,
+          ),
+        ));
+      case SnackBarType.saveSecondAnimation:
+        return ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          duration: duration ?? const Duration(seconds: 3),
+          dismissDirection: direction ?? DismissDirection.down,
+          behavior: SnackBarBehavior.fixed,
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          content: SaveSnackBarSecondWidget(onPressed: () {
+            ScaffoldMessenger.of(context).clearSnackBars();
+          },
+            label: label ?? "",
+            primaryColor: primaryColor,
+            titleTextStyle: titleTextStyle,
+          ),
+        ));
+      case SnackBarType.failFirstAnimation:
+        // TODO: Handle this case.
+        break;
+      case SnackBarType.failSecondAnimation:
+        // TODO: Handle this case.
+        break;
+    }
 
-
-        },
-        elevation: 0,
-        content: CustomSnackBarWidget(label: '', onPressed: () {
-        },
-          height: height ?? 50, title: title ?? "",
-          primaryColor: primaryColor,
-          backgroundColor: backgroundColor,
-          subTitle: subTitle,
-          actionLabel: actionLabel,
-          titleTextStyle: titleTextStyle,
-          subtitleTextStyle: subtitleTextStyle,
-          actionLabelTextStyle: actionLabelTextStyle,
-          onActionTap: onActionTap,
-          iconData: iconData,
-          iconAvatarRadius: iconAvatarRadius,
-          iconColor: iconColor,
-          duration: duration,
-          direction: direction,
-          hasLabel: hasLabel,
-        ),
-    ));
   }
 }
 
-class CustomSnackBarWidget extends StatefulWidget implements SnackBarAction {
-  const CustomSnackBarWidget({
+
+
+
+class SaveSnackBarFirstWidget extends StatefulWidget implements SnackBarAction {
+  const SaveSnackBarFirstWidget({
     Key? key,
     this.textColor,
     this.disabledTextColor,
     required this.label,
     required this.onPressed,
-    required this.height,
-    this.backgroundColor = Colors.black,
-    this.primaryColor = Colors.blue,
-    required this.title,
-    this.subTitle,
-    this.actionLabel,
+    this.primaryColor = Colors.green,
     this.titleTextStyle,
-    this.subtitleTextStyle,
-    this.actionLabelTextStyle,
-    this.onActionTap,
-    this.iconData,
-    this.width,
-    this.iconAvatarRadius,
-    this.iconColor,
-    this.duration,
-    this.direction,
-    this.hasLabel,
   }) : super(key: key);
 
   @override
@@ -92,31 +96,15 @@ class CustomSnackBarWidget extends StatefulWidget implements SnackBarAction {
   @override
   final VoidCallback onPressed;
 
-  final String title;
   final Color primaryColor;
-  final Color backgroundColor;
-  final String? subTitle;
-  final String? actionLabel;
   final TextStyle? titleTextStyle;
-  final TextStyle? subtitleTextStyle;
-  final TextStyle? actionLabelTextStyle;
-  final Function? onActionTap;
-  final IconData? iconData;
-  final double? height;
-  final double? width;
-  final double? iconAvatarRadius;
-  final Color? iconColor;
-  final Duration? duration;
-  final DismissDirection? direction;
-  final bool? hasLabel;
 
 
   @override
-  State<CustomSnackBarWidget> createState() => _CustomSnackBarWidgetState();
+  State<SaveSnackBarFirstWidget> createState() => _SaveSnackBarFirstWidgetState();
 }
 
-class _CustomSnackBarWidgetState extends State<CustomSnackBarWidget> with SingleTickerProviderStateMixin {
-  var sizeAnimationStart = false;
+class _SaveSnackBarFirstWidgetState extends State<SaveSnackBarFirstWidget> with SingleTickerProviderStateMixin {
   var changeAnimationStart = false;
   var fadeAnimationStart = false;
 
@@ -135,37 +123,21 @@ class _CustomSnackBarWidgetState extends State<CustomSnackBarWidget> with Single
 
   void _handleAnimation() {
     _showCheck();
-    Future.delayed(const Duration(milliseconds: 300), (){
+    Future.delayed(const Duration(milliseconds: 800), (){
       setState(() {
-        sizeAnimationStart = true;
+        changeAnimationStart = true;
       });
-      Future.delayed(const Duration(milliseconds: 200), (){
+      Future.delayed(const Duration(milliseconds: 50), (){
         setState(() {
-          changeAnimationStart = true;
-        });
-        Future.delayed(const Duration(milliseconds: 300), (){
-          _resetCheck();
-          setState(() {
-            fadeAnimationStart = true;
-          });
+          fadeAnimationStart = true;
         });
       });
     });
-
-    // widget.onPressed();
-    // ScaffoldMessenger.of(context).hideCurrentSnackBar(reason: SnackBarClosedReason.action);
   }
-
-
 
   void _showCheck() {
     _animationController.forward();
   }
-
-  void _resetCheck() {
-    // _animationController.reverse();
-  }
-
 
   @override
   Widget build(BuildContext context) {
@@ -175,87 +147,169 @@ class _CustomSnackBarWidgetState extends State<CustomSnackBarWidget> with Single
         clipBehavior: Clip.antiAliasWithSaveLayer,
         borderRadius: BorderRadius.circular(15),
         child: AnimatedContainer(
-          color: fadeAnimationStart ? widget.backgroundColor : Colors.white.withOpacity(0),
-          duration: const Duration(milliseconds: 150),
-          height: widget.height,
-          child: !changeAnimationStart ? AnimatedPadding(
-            curve: Curves.easeOutBack,
-            duration: const Duration(milliseconds: 150),
-            padding: EdgeInsets.only(right: sizeAnimationStart ? 0 : 0),
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: Container(
-                margin: const EdgeInsets.only(left: 8),
-                width: 40,
-                child: CircleAvatar(
-                    radius: widget.iconAvatarRadius ?? 20,
-                    backgroundColor: Colors.white.withOpacity(0),
-                    child: Center(
-                        child: AnimatedCheck(
-                          color: widget.primaryColor,
-                          progress: _animation,
-                          size: 40,
-                        ))),
-              ),
+          color: changeAnimationStart ? widget.primaryColor : Colors.white.withOpacity(0),
+          curve: Curves.easeOut,
+          duration: const Duration(milliseconds: 200),
+          height: 50,
+          child: !changeAnimationStart ? Align(
+            alignment: Alignment.centerLeft,
+            child: Container(
+              margin: const EdgeInsets.only(left: 8),
+              height: 50,
+              width: 40,
+              child: Center(
+                  child: AnimatedCheck(
+                    color: widget.primaryColor,
+                    progress: _animation,
+                    size: 40,
+                  )),
             ),
-          ) : Row(
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Center(
-                child: Container(
-                  margin: const EdgeInsets.only(left: 8),
-                  width: 40,
-                  child: CircleAvatar(
-                      radius: widget.iconAvatarRadius ?? 20,
-                      backgroundColor: Colors.white.withOpacity(0),
-                      child: AnimatedContainer(
-                        duration: const Duration(milliseconds: 150),
-                        child: AnimatedCheck(
-                          color: fadeAnimationStart ? Colors.white : widget.primaryColor,
-                          progress: _animation,
-                          size: 40,
-                        ),
-                      )),
+          ) : SizedBox(
+            height: 50,
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Center(
+                  child: Container(
+                    margin: const EdgeInsets.only(left: 8),
+                    width: 40,
+                    child: AnimatedContainer(
+                      duration: const Duration(milliseconds: 400),
+                      child: AnimatedCheck(
+                        color: fadeAnimationStart ? Colors.white : widget.primaryColor,
+                        progress: _animation,
+                        size: 40,
+                      ),
+                    ),
+                  ),
                 ),
-              ),
-              const SizedBox(width: 8),
-              AnimatedOpacity(
-                duration: const Duration(milliseconds: 150),
-                opacity: fadeAnimationStart ? 1.0 : 0.0,
-                curve: Curves.easeInOut,
-                child: Column(
+                const SizedBox(width: 8),
+                Text(widget.label,
+                    overflow: TextOverflow.ellipsis,
+                    style: widget.titleTextStyle ?? TextStyle(fontSize: 16, color: widget.primaryColor == Colors.white ? Colors.black : Colors.white)),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class SaveSnackBarSecondWidget extends StatefulWidget implements SnackBarAction {
+  const SaveSnackBarSecondWidget({
+    Key? key,
+    this.textColor,
+    this.disabledTextColor,
+    required this.label,
+    required this.onPressed,
+    this.primaryColor = Colors.green, this.titleTextStyle,
+  }) : super(key: key);
+
+  @override
+  final Color? textColor;
+
+  @override
+  final Color? disabledTextColor;
+
+  @override
+  final String label;
+
+  @override
+  final VoidCallback onPressed;
+
+  final Color primaryColor;
+  final TextStyle? titleTextStyle;
+
+
+  @override
+  State<SaveSnackBarSecondWidget> createState() => _SaveSnackBarSecondWidgetState();
+}
+
+class _SaveSnackBarSecondWidgetState extends State<SaveSnackBarSecondWidget> with SingleTickerProviderStateMixin {
+  var fadeAnimationStart = false;
+
+  late AnimationController _animationController;
+  late Animation<double> _animation;
+
+  @override
+  void initState()  {
+    _animationController = AnimationController(vsync: this, duration: const Duration(milliseconds: 500));
+    _animation = Tween<double>(begin: 0, end: 1).animate(CurvedAnimation(parent: _animationController, curve: Curves.easeInOutCirc));
+    _handleAnimation();
+    super.initState();
+  }
+
+  void _handleAnimation() {
+    Future.delayed(const Duration(milliseconds: 300), (){
+      _showCheck();
+      setState(() {
+        fadeAnimationStart = true;
+      });
+    });
+  }
+
+  void _showCheck() {
+    _animationController.forward();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: widget.onPressed,
+      child: ClipRRect(
+        clipBehavior: Clip.antiAliasWithSaveLayer,
+        borderRadius: BorderRadius.circular(15),
+        child: AnimatedContainer(
+          color: widget.primaryColor,
+          curve: Curves.easeInOut,
+          duration: const Duration(milliseconds: 400),
+          height: 50,
+          child: SizedBox(
+            height: 50,
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Center(
+                  child: Container(
+                    margin: const EdgeInsets.only(left: 8),
+                    width: 40,
+                    child: CircleAvatar(
+                        radius: 20,
+                        backgroundColor: Colors.white.withOpacity(0),
+                        child: AnimatedContainer(
+                          duration: const Duration(milliseconds: 400),
+                          child: AnimatedCheck(
+                            color: fadeAnimationStart ? Colors.white : widget.primaryColor,
+                            progress: _animation,
+                            size: 40,
+                          ),
+                        )),
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(widget.title,
-                        overflow: TextOverflow.ellipsis,
-                        style: widget.titleTextStyle ??
-                            const TextStyle(fontSize: 16, color: Colors.white)),
-                    if (widget.subTitle != null)
-                      Container(
-                        margin: const EdgeInsets.only(top: 4),
-                        child: Text(widget.subTitle ?? "",
-                            overflow: TextOverflow.ellipsis,
-                            style: widget.subtitleTextStyle ??
-                                const TextStyle(
-                                    fontSize: 12, color: Colors.white)),
-                      )
+                    AnimatedContainer(
+                      margin: EdgeInsets.only(left: fadeAnimationStart ? 0 : 10),
+                      duration: const Duration(milliseconds: 400),
+                      child: AnimatedOpacity(
+                        duration: const Duration(milliseconds: 400),
+                        opacity: fadeAnimationStart ? 1.0 : 0.0,
+                        child: Text(widget.label,
+                            overflow: TextOverflow.visible,
+                            maxLines: 1,
+                            style: widget.titleTextStyle ??
+                                const TextStyle(fontSize: 16, color: Colors.white)),
+                      ),
+                    ),
                   ],
                 ),
-              ),
-              const Spacer(),
-              if (widget.actionLabel != null)
-                AnimatedOpacity(
-                  duration: const Duration(milliseconds: 150),
-                  opacity: fadeAnimationStart ? 1.0 : 0.0,
-                  child: TextButton(
-                      onPressed: () {
-                        widget.onActionTap;
-                      },
-                      child: Text(widget.actionLabel ?? "",
-                          style: widget.actionLabelTextStyle ?? const TextStyle(fontSize: 10, color: Colors.white))),
-                )
-            ],
+
+              ],
+            ),
           ),
         ),
       ),

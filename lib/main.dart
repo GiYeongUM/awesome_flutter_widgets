@@ -52,7 +52,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 margin: const EdgeInsets.symmetric(vertical: 16),
                 child: ElevatedButton(
                   onPressed: () {
-                      AnimatedSnackBar.style1(context: context, title: "Your changes have been saved!");
+                      AnimatedSnackBar.style1(context: context, label: "Your changes have been saved!", snackBarType: SnackBarType.saveFirstAnimation);
                   },
                   child: const Text("Save"),
                 ),
