@@ -186,10 +186,11 @@ class _SaveSnackBarFirstWidgetState extends State<SaveSnackBarFirstWidget> with 
               height: 50,
               width: 40,
               child: Center(
-                  child: AnimatedCheck(
+                  child: AnimatedIcons(
                     color: widget.primaryColor,
                     progress: _animation,
                     size: 40,
+                    iconType: IconType.check,
                   )),
             ),
           ) : SizedBox(
@@ -203,10 +204,11 @@ class _SaveSnackBarFirstWidgetState extends State<SaveSnackBarFirstWidget> with 
                     width: 40,
                     child: AnimatedContainer(
                       duration: const Duration(milliseconds: 400),
-                      child: AnimatedCheck(
+                      child: AnimatedIcons(
                         color: fadeAnimationStart ? Colors.white : widget.primaryColor,
                         progress: _animation,
                         size: 40,
+                        iconType: IconType.check,
                       ),
                     ),
                   ),
@@ -315,10 +317,11 @@ class _SaveSnackBarSecondWidgetState extends State<SaveSnackBarSecondWidget> wit
                         backgroundColor: Colors.white.withOpacity(0),
                         child: AnimatedContainer(
                           duration: const Duration(milliseconds: 400),
-                          child: AnimatedCheck(
+                          child: AnimatedIcons(
                             color: fadeAnimationStart ? Colors.white : widget.primaryColor,
                             progress: _animation,
                             size: 40,
+                            iconType: IconType.check,
                           ),
                         )),
                   ),
@@ -439,10 +442,11 @@ class _FailSnackBarFirstWidgetState extends State<FailSnackBarFirstWidget> with 
               height: 50,
               width: 40,
               child: Center(
-                  child: AnimatedClose(
+                  child: AnimatedIcons(
                     color: widget.primaryColor,
                     progress: _animation,
                     size: 40,
+                    iconType: IconType.fail,
                   )),
             ),
           ) : SizedBox(
@@ -456,10 +460,11 @@ class _FailSnackBarFirstWidgetState extends State<FailSnackBarFirstWidget> with 
                     width: 40,
                     child: AnimatedContainer(
                       duration: const Duration(milliseconds: 400),
-                      child: AnimatedClose(
+                      child: AnimatedIcons(
                         color: fadeAnimationStart ? Colors.white : widget.primaryColor,
                         progress: _animation,
                         size: 40,
+                        iconType: IconType.fail,
                       ),
                     ),
                   ),
@@ -568,10 +573,11 @@ class _FailSnackBarSecondWidgetState extends State<FailSnackBarSecondWidget> wit
                         backgroundColor: Colors.white.withOpacity(0),
                         child: AnimatedContainer(
                           duration: const Duration(milliseconds: 400),
-                          child: AnimatedClose(
+                          child: AnimatedIcons(
                             color: fadeAnimationStart ? Colors.white : widget.primaryColor,
                             progress: _animation,
                             size: 40,
+                            iconType: IconType.fail,
                           ),
                         )),
                   ),
@@ -606,24 +612,31 @@ class _FailSnackBarSecondWidgetState extends State<FailSnackBarSecondWidget> wit
   }
 }
 
-class AnimatedCheck extends StatefulWidget {
+enum IconType {
+  check,
+  fail,
+  alert,
+}
+
+class AnimatedIcons extends StatefulWidget {
   final Animation<double> progress;
   final double size;
   final Color? color;
   final double? strokeWidth;
+  final IconType iconType;
 
-  const AnimatedCheck({
+  const AnimatedIcons({
     Key? key,
     required this.progress,
     required this.size,
     this.color,
-    this.strokeWidth}) : super(key: key);
+    this.strokeWidth, required this.iconType}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => AnimatedCheckState();
+  State<StatefulWidget> createState() => AnimatedIconsState();
 }
 
-class AnimatedCheckState extends State<AnimatedCheck> with SingleTickerProviderStateMixin {
+class AnimatedIconsState extends State<AnimatedIcons> with SingleTickerProviderStateMixin {
 
   @override
   void initState() {
@@ -633,14 +646,33 @@ class AnimatedCheckState extends State<AnimatedCheck> with SingleTickerProviderS
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
+    switch(widget.iconType) {
+      case IconType.check:
+        return CustomPaint(
+            foregroundPainter: AnimatedCheckPathPainter(widget.progress, widget.color ?? theme.primaryColor, widget.strokeWidth),
+            child: SizedBox(
+              width: widget.size,
+              height: widget.size,
+            )
+        );
+      case IconType.fail:
+        return CustomPaint(
+            foregroundPainter: AnimatedClosePathPainter(widget.progress, widget.color ?? theme.primaryColor, widget.strokeWidth),
+            child: SizedBox(
+              width: widget.size,
+              height: widget.size,
+            )
+        );
+      case IconType.alert:
+        return CustomPaint(
+            foregroundPainter: AnimatedAlertPathPainter(widget.progress, widget.color ?? theme.primaryColor, widget.strokeWidth),
+            child: SizedBox(
+              width: widget.size,
+              height: widget.size,
+            )
+        );
+    }
 
-    return CustomPaint(
-        foregroundPainter: AnimatedCheckPathPainter(widget.progress, widget.color ?? theme.primaryColor, widget.strokeWidth),
-        child: SizedBox(
-          width: widget.size,
-          height: widget.size,
-        )
-    );
   }
 }
 
@@ -716,44 +748,6 @@ class AnimatedCheckPathPainter extends CustomPainter {
   @override
   bool shouldRepaint(CustomPainter oldDelegate) {
     return true;
-  }
-}
-
-class AnimatedClose extends StatefulWidget {
-  final Animation<double> progress;
-  final double size;
-  final Color? color;
-  final double? strokeWidth;
-
-  const AnimatedClose({
-    Key? key,
-    required this.progress,
-    required this.size,
-    this.color,
-    this.strokeWidth}) : super(key: key);
-
-  @override
-  State<StatefulWidget> createState() => AnimatedCloseState();
-}
-
-class AnimatedCloseState extends State<AnimatedClose> with SingleTickerProviderStateMixin {
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final ThemeData theme = Theme.of(context);
-
-    return CustomPaint(
-        foregroundPainter: AnimatedClosePathPainter(widget.progress, widget.color ?? theme.primaryColor, widget.strokeWidth),
-        child: SizedBox(
-          width: widget.size,
-          height: widget.size,
-        )
-    );
   }
 }
 
@@ -833,5 +827,79 @@ class AnimatedClosePathPainter extends CustomPainter {
   }
 }
 
+class AnimatedAlertPathPainter extends CustomPainter {
+  final Animation<double> _animation;
+  final Color _color;
+  final double? strokeWidth;
 
+  AnimatedAlertPathPainter(this._animation, this._color, this.strokeWidth) : super(repaint: _animation);
+
+  Path _createAnyPath(Size size) {
+    return Path()
+      ..addOval(Rect.fromCircle(
+        center: Offset(0.5 * size.width, 0.5 * size.height),
+        radius: (size.width + size.height) / 6,
+      ));
+  }
+
+  Path createAnimatedPath(Path originalPath, double animationPercent) {
+    final totalLength = originalPath
+        .computeMetrics()
+        .fold(0.0, (double prev, PathMetric metric) => prev + metric.length);
+
+    final currentLength = totalLength * animationPercent;
+
+    return extractPathUntilLength(originalPath, currentLength);
+  }
+
+  Path extractPathUntilLength(Path originalPath, double length) {
+    var currentLength = 0.0;
+
+    final path = Path();
+
+    var metricsIterator = originalPath.computeMetrics().iterator;
+
+    while (metricsIterator.moveNext()) {
+      var metric = metricsIterator.current;
+
+      var nextLength = currentLength + metric.length;
+
+      final isLastSegment = nextLength > length;
+      if (isLastSegment) {
+        final remainingLength = length - currentLength;
+        final pathSegment = metric.extractPath(0.0, remainingLength);
+
+        path.addPath(pathSegment, Offset.zero);
+        break;
+      } else {
+
+        final pathSegment = metric.extractPath(0.0, metric.length);
+        path.addPath(pathSegment, Offset.zero);
+      }
+
+      currentLength = nextLength;
+    }
+
+    return path;
+  }
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final animationPercent = _animation.value;
+
+    final path = createAnimatedPath(_createAnyPath(size), animationPercent);
+
+    final Paint paint = Paint();
+    paint.color = _color;
+    paint.style = PaintingStyle.stroke;
+    paint.strokeWidth = strokeWidth ?? size.width * 0.06;
+
+    canvas.drawPath(path, paint);
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) {
+    return true;
+  }
+}
 
