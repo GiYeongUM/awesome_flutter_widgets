@@ -1,3 +1,6 @@
+import 'package:awesome_flutter_widgets/utils.dart';
+import 'package:awesome_flutter_widgets/widgets/animated_snack_bar.dart';
+import 'package:awesome_flutter_widgets/widgets/circle_check_box.dart';
 import 'package:awesome_flutter_widgets/widgets/custom_dialog.dart';
 import 'package:awesome_flutter_widgets/widgets/custom_fab.dart';
 import 'package:awesome_flutter_widgets/widgets/ellipsis_text.dart';
@@ -30,6 +33,9 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+
+  List<bool> isSelected = [false, false, false, false];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,23 +44,40 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: Container(
         margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: const <Widget>[
-            // todo : test widgets
-            // EllipsisText(
-            //   style: TextStyle(color: Colors.black, fontSize: 16),
-            //   text: "위젯 테스트 문구입니다. 위젯 테스트 문구입니다. 위젯 테스트 문구입니다. 위젯 테스트 문구입니다. 위젯 테스트 문구입니다. 위젯 테스트 문구입니다. 위젯 테스트 문구입니다. 위젯 테스트 문구입니다. 위젯 테스트 문구입니다. 위젯 테스트 문구입니다. 위젯 테스트 문구입니다. "
-            //       "위젯 테스트 문구입니다. 위젯 테스트 문구입니다. 위젯 테스트 문구입니다. 위젯 테스트 문구입니다. 위젯 테스트 문구입니다. 위젯 테스트 문구입니다. 위젯 테스트 문구입니다. 위젯 테스트 문구입니다. 위젯 테스트 문구입니다. 위젯 테스트 문구입니다. 위젯 테스트 문구입니다.",
-            //   ellipsis: "..더보기",
-            //   maxLines: 2,
-            //   isShowMore: true,
-            //   splashFactory: NoSplash.splashFactory,
-            // ),
-          ],
+        child: Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Container(
+                margin: const EdgeInsets.symmetric(vertical: 16),
+                child: ElevatedButton(
+                  onPressed: () {
+                      AnimatedSnackBar.style1(context: context, title: "Your changes have been saved!");
+                  },
+                  child: const Text("Save"),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
+      // floatingActionButton: CustomFAB(
+      //   firstButtonIcon: Icons.add_photo_alternate_outlined,
+      //   secondButtonIcon: Icons.camera_alt,
+      //   thirdButtonIcon: Icons.delete,
+      //   thirdIconColor: Colors.red,
+      //   firstOnClick: (){
+      //     showDialog(context: context, builder: (context) {
+      //       return const CustomDialog(
+      //           title: "알림",
+      //           content: "내용입니다.",
+      //           titleStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+      //       );});
+      //     },
+      //   secondOnClick: (){
+      //   },
+      //   thirdOnClick: (){print("third");},
+      // ),
     );
   }
 }
