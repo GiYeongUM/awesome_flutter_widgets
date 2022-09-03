@@ -4,12 +4,15 @@ class EllipsisText extends StatefulWidget {
   const EllipsisText({
     Key? key,
     required this.text,
-    this.style,
+    this.style = const TextStyle(color: Colors.black),
     required this.ellipsis,
     this.maxWidth = double.infinity,
     this.minWidth = 0,
     this.maxLines = 2,
-    this.textDirection, this.isShowMore, this.startScaleIsSmall, this.splashFactory,
+    this.textDirection,
+    this.isShowMore,
+    this.startScaleIsSmall,
+    this.splashFactory,
   }) : super(key: key);
 
   final String text;
@@ -73,7 +76,7 @@ class _EllipsisTextState extends State<EllipsisText> {
       textDirection: widget.textDirection ?? TextDirection.ltr,
     )..layout(minWidth: widget.minWidth, maxWidth: widget.maxWidth);
 
-    return widget.isShowMore ?? false ? InkWell(
+    return widget.isShowMore ?? true ? InkWell(
       splashFactory: widget.splashFactory,
       onTap: () {
         setState(() {
@@ -84,7 +87,7 @@ class _EllipsisTextState extends State<EllipsisText> {
         duration: const Duration(milliseconds: 300),
         crossFadeState: isSmallContent ? CrossFadeState.showFirst : CrossFadeState.showSecond,
         firstChild: CustomPaint(
-            size: Size(textPainter.size.width, getTextLineHeight(style: widget.style ?? const TextStyle(), lines: widget.maxLines)) ,
+            size: Size(textPainter.size.width, getTextLineHeight(style: widget.style ?? const TextStyle(color: Colors.black), lines: widget.maxLines)) ,
             painter: EllipsisTextPainter(
               text: TextSpan(text: widget.text, style: widget.style),
               ellipsis: widget.ellipsis,
@@ -118,6 +121,7 @@ class EllipsisTextPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
+
     TextPainter painter = TextPainter(
       text: text,
       maxLines: maxLines,
