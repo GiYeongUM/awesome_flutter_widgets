@@ -67,7 +67,7 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
                 ellipsis: "..show more",
                 maxLines: 2,  // default
                 isShowMore: true, // default
-                startScaleIsSmall: false, // default
+                startScaleIsSmall: true, // default
               ),
               Container(
                 margin: const EdgeInsets.symmetric(vertical: 16),

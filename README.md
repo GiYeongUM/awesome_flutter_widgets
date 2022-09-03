@@ -38,7 +38,7 @@ EllipsisText(
     maxLines: 2,  // default
     style: TextStyle(), // add if you want
     isShowMore: true, // default
-    startScaleIsSmall: false, // default
+    startScaleIsSmall: true, // default
 )
 ```
 
