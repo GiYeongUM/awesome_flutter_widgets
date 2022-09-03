@@ -1,6 +1,6 @@
 // import 'package:intl/intl.dart';
 
-  import 'dart:math';
+import 'dart:math';
 
 /// 이메일 정규표현식
   checkEmailRegex({required String email}) {
@@ -55,7 +55,7 @@
       if (s[s.length - 1] == '0') {
         return "${s.substring(0, s.length - 2)}K";
       }
-      return s + "K";
+      return "${s}K";
     }
     if (value < 1000000) {
       return "${(value / 1000).toStringAsFixed(1)}K";
@@ -70,33 +70,33 @@
     }
 
     if (value < 1000000000) {
-      return (value / pow(1000, 2)).toStringAsFixed(1) + "M";
+      return "${(value / pow(1000, 2)).toStringAsFixed(1)}M";
     }
 
     if (value < 10000000000) {
       final s = (value / pow(1000, 3)).toStringAsFixed(1);
       if (s[s.length - 1] == '0') {
-        return s.substring(0, s.length - 2) + "B";
+        return "${s.substring(0, s.length - 2)}B";
       }
-      return s + "B";
+      return "${s}B";
     }
 
     if (value < 1000000000000) {
-      return (value / pow(1000, 3)).toStringAsFixed(1) + "B";
+      return "${(value / pow(1000, 3)).toStringAsFixed(1)}B";
     }
 
     if (value < 10000000000000) {
       final s = (value / pow(1000, 4)).toStringAsFixed(1);
       if (s[s.length - 1] == '0') {
-        return s.substring(0, s.length - 2) + "T";
+        return "${s.substring(0, s.length - 2)}T";
       }
-      return s + "T";
+      return "${s}T";
     }
 
     if (value < 1000000000000000) {
-      return (value / pow(1000, 4)).toStringAsFixed(1) + "T";
+      return "${(value / pow(1000, 4)).toStringAsFixed(1)}T";
     }
 
-    return (value / pow(1000, 5)).toStringAsFixed(1) + "Q";
+    return "${(value / pow(1000, 5)).toStringAsFixed(1)}Q";
   }
 

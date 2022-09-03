@@ -92,9 +92,6 @@ class CustomDialog extends StatelessWidget {
                       ),
                     ),
                   ),
-              // SizedBox(
-              //   height: buttonToBottomGap ?? 16,
-              // ),
             ],
           ),
         ),
