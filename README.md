@@ -45,7 +45,7 @@ EllipsisText(
 
 ## 2. custom_dialog 🔥
 
-This widget is a simple dialog that deviates from the complex dialog of the flutter. 
+This widget is a simple dialog that deviates from the complex dialog of the flutter.
 You can also add an **animation icon** instead of a title.
 
 
@@ -170,7 +170,7 @@ _showIcon()
 
 ## 5. animated_snack_bar 🔥
 
-This widget is a snack bar with a customized animation. 
+This widget is a snack bar with a customized animation.
 There are two animations for each state.
 
 

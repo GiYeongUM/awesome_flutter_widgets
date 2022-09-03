@@ -1,3 +1,7 @@
+## 0.0.2+4
+
+* edit configs
+
 ## 0.0.2+3
 
 * edit metadata
