@@ -26,7 +26,7 @@ dependencies:
 ellipsis text is a widget that allows you to **customize text in ellipsis** when text exceeds maxLines.
 
 
-<img width="308" alt="ellipsis_text" src="images/ellipsis_text.gif">
+<img width="308" alt="" src="https://github.com/GiYeongUM/awesome_flutter_widgets/raw/main/images/ellipsis_text.gif">
 
 ``` dart
 EllipsisText(
@@ -49,8 +49,8 @@ This widget is a simple dialog that deviates from the complex dialog of the flut
 You can also add an **animation icon** instead of a title.
 
 
-<img width="308" alt="ellipsis_text" src="images/custom_dialog_text.png">
-<img width="308" alt="ellipsis_text" src="images/custom_dialog_icon.gif">
+<img width="308" alt="" src="https://github.com/GiYeongUM/awesome_flutter_widgets/raw/main/images/custom_dialog_text.png">
+<img width="308" alt="" src="https://github.com/GiYeongUM/awesome_flutter_widgets/raw/main/images/custom_dialog_icon.gif">
 
 ``` dart
 CustomDialog.dialog(
@@ -88,7 +88,7 @@ static dialog({
 
 Simple animated FAB! (maximum 3)
 
-<img width="308" alt="ellipsis_text" src="images/custom_fab_widget.gif">
+<img width="308" alt="" src="https://github.com/GiYeongUM/awesome_flutter_widgets/raw/main/images/custom_fab_widget.gif">
 
 ``` dart
 floatingActionButton: CustomFAB(
@@ -112,7 +112,7 @@ floatingActionButton: CustomFAB(
 
 Simple animated Icons! (It will be added frequently)
 
-<img width="308" alt="ellipsis_text" src="images/custom_animated_icons.gif">
+<img width="308" alt="" src="https://github.com/GiYeongUM/awesome_flutter_widgets/raw/main/images/custom_animated_icons.gif">
 
 1. set animations
 ``` dart
@@ -174,9 +174,9 @@ This widget is a snack bar with a customized animation.
 There are two animations for each state.
 
 
-<img width="308" alt="ellipsis_text" src="images/animated_snack_bar_save_2.gif">
-<img width="308" alt="ellipsis_text" src="images/animated_snack_bar_fail_2.gif">
-<img width="308" alt="ellipsis_text" src="images/animated_snack_bar_alert_2.gif">
+<img width="308" alt="" src="https://github.com/GiYeongUM/awesome_flutter_widgets/raw/main/images/animated_snack_bar_save_2.gif">
+<img width="308" alt="" src="https://github.com/GiYeongUM/awesome_flutter_widgets/raw/main/images/animated_snack_bar_fail_2.gif">
+<img width="308" alt="" src="https://github.com/GiYeongUM/awesome_flutter_widgets/raw/main/images/animated_snack_bar_alert_2.gif">
 
 
 ``` dart

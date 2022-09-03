@@ -1,9 +1,8 @@
+import 'package:awesome_flutter_widgets/widgets/custom_animated_icons.dart';
 import 'package:awesome_flutter_widgets/widgets/custom_dialog.dart';
 import 'package:awesome_flutter_widgets/widgets/custom_fab.dart';
 import 'package:awesome_flutter_widgets/widgets/ellipsis_text.dart';
 import 'package:flutter/material.dart';
-
-import 'widgets/custom_animated_icons.dart';
 
 void main() {
   runApp(const MyApp());
@@ -47,7 +46,7 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
   void _showIcon() {
     _animationController.forward();
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
