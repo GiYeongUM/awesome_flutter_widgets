@@ -1,14 +1,199 @@
 # awesome_flutter_widgets
 
-Flutter 재사용가능한 위젯모음
+awesome flutter widgets
 
-widgets 디렉토리에 사용가능한 위젯 구현
-main.dart 에서 테스트
+[![Flutter](https://img.shields.io/badge/Platform-Flutter-blue.svg)](https://flutter.dev/)
 
-[위젯리스트]
-1. ellipsis_text : 기존 text의 ellipsis에 String으로 문구를 넣을 수 있으며 클릭시 전체보기가 되는 위젯
-2. custom_dialog : flutter 기본 다이얼로그를 컴포넌트화 하여 제목 하나만 넣고 활용 할 수 있는 위젯
-3. nhn_payment_view_widget : NHN 사이버 결제 모듈을 웹뷰로 연동하여 간단하게 결제 모듈을 붙일 수 있는 위젯
-4. custom_fab : FAB의 버튼을 여러개로 분할되어 선택할 수 있게 하는 위젯
-5. util : 각종 정규표현식, n시간전 - n일전 등 이전시간 계산 함수, thousandToK - 1000 단위를 K 표가로 바꿔주는 함수
-6. animated_snack_bar : 애니메이션이 추가된 스낵바
+## Widget lists
+
+- ellipsis_text
+- custom_dialog
+- custom_fab
+- custom_animated_icons
+- animated_snack_bar
+- and some utils (regex, timeAgo..)
+
+## ⚡ [Installation](https://flutter.dev/docs/development/packages-and-plugins/using-packages)
+
+
+```yaml
+dependencies:
+  awesome_flutter_widgets: ^<latest_version>
+```
+
+## 1. ellipsis_text 🔥
+
+ellipsis text is a widget that allows you to **customize text in ellipsis** when text exceeds maxLines.
+
+
+<img width="308" alt="ellipsis_text" src="images/ellipsis_text.gif">
+
+``` dart
+EllipsisText(
+    text: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. "
+        "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, "
+        "when an unknown printer took a galley of type and scrambled it to make a type specimen book. "
+        "It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.",
+    ellipsis: "..show more",
+    maxLines: 2,  // default
+    style: TextStyle(), // add if you want
+    isShowMore: true, // default
+    startScaleIsSmall: false, // default
+)
+```
+
+
+## 2. custom_dialog 🔥
+
+This widget is a simple dialog that deviates from the complex dialog of the flutter. 
+You can also add an **animation icon** instead of a title.
+
+
+<img width="308" alt="ellipsis_text" src="images/custom_dialog_text.png">
+<img width="308" alt="ellipsis_text" src="images/custom_dialog_icon.gif">
+
+``` dart
+CustomDialog.dialog(
+    context: context, 
+    title: "Check", 
+    content: "Save successfully", 
+    iconTitle: true
+);
+```
+
+also you can customize sizes, widget and fonts ...
+
+``` dart
+static dialog({
+    required BuildContext context,
+    required String title,
+    bool? iconTitle,
+    String? content,
+    Widget? widgets,
+    Color? primaryColor,
+    bool? canGoBack,
+    double? radius,
+    double? insetPadding,
+    double? topToTitleGap,
+    double? titleToContentGap,
+    double? contentToButtonGap,
+    double? buttonToBottomGap,
+    TextStyle? titleStyle,
+    TextStyle? contentStyle,
+    Color? defaultButtonTextColor,
+  });
+```
+
+## 3. custom_fab 🔥
+
+Simple animated FAB! (maximum 3)
+
+<img width="308" alt="ellipsis_text" src="images/custom_fab_widget.gif">
+
+``` dart
+floatingActionButton: CustomFAB(
+    firstOnClick: () { 
+      /// do something!
+    },
+    firstButtonIcon: Icons.add,
+    secondOnClick: () {
+      /// do something!
+    },
+    secondButtonIcon: Icons.close,
+    thirdOnClick: () {
+      /// do something!
+    },
+    thirdButtonIcon: Icons.add,
+),
+```
+
+
+## 4. custom_animated_icons 🔥
+
+Simple animated Icons! (It will be added frequently)
+
+<img width="308" alt="ellipsis_text" src="images/custom_animated_icons.gif">
+
+1. set animations
+``` dart
+class _FooClassState extends State<FooClass> with SingleTickerProviderStateMixin {
+
+  late AnimationController _animationController;
+  late Animation<double> _animation;
+
+  @override
+  void initState()  {
+    _animationController = AnimationController(vsync: this, duration: const Duration(milliseconds: 700));
+    _animation = Tween<double>(begin: 0, end: 1).animate(CurvedAnimation(parent: _animationController, curve: Curves.easeInOutCirc));
+    super.initState();
+  }
+
+  void _showIcon() {
+    _animationController.forward();
+  }
+  
+  ...
+```
+
+2. add widget
+``` dart
+CustomAnimatedIcons(
+    color: Colors.green,
+    progress: _animation,
+    size: 40,
+    iconType: IconType.check,
+),
+
+CustomAnimatedIcons(
+    color: Colors.red,
+    progress: _animation,
+    size: 40,
+    iconType: IconType.fail,
+),
+
+CustomAnimatedIcons(
+    color: Colors.black,
+    progress: _animation,
+    size: 40,
+    iconType: IconType.alert,
+),
+```
+
+3. trigger widget animation
+``` dart
+_showIcon()
+
+/// If you want to do the reverse
+/// do this
+/// _animationController.reverse();
+```
+
+## 5. animated_snack_bar 🔥
+
+This widget is a snack bar with a customized animation. 
+There are two animations for each state.
+
+
+<img width="308" alt="ellipsis_text" src="images/animated_snack_bar_save_2.gif">
+<img width="308" alt="ellipsis_text" src="images/animated_snack_bar_fail_2.gif">
+<img width="308" alt="ellipsis_text" src="images/animated_snack_bar_alert_2.gif">
+
+
+``` dart
+ElevatedButton(
+  onPressed: () {
+    CustomDialog.dialog(
+        context: context,
+        title: 'Check',
+        content: "Save successfully",
+        iconTitle: true
+    );
+  },
+  child: const Text("Save"),
+),
+
+```
+
+## 6. utils 🔥
+
+

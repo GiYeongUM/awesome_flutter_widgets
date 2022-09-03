@@ -3,25 +3,25 @@ import 'package:flutter/material.dart';
 class CustomFAB extends StatefulWidget {
   const CustomFAB({
     Key? key,
-    this.primaryColor,
     required this.firstButtonIcon,
-    required this.secondButtonIcon,
-    required this.thirdButtonIcon,
+    this.secondButtonIcon,
+    this.thirdButtonIcon,
+    required this.firstOnClick,
+    this.secondOnClick,
+    this.thirdOnClick,
+    this.primaryColor,
     this.firstButtonColor,
     this.firstIconColor,
     this.secondButtonColor,
     this.secondIconColor,
     this.thirdButtonColor,
     this.thirdIconColor,
-    required this.firstOnClick,
-    required this.secondOnClick,
-    required this.thirdOnClick,
   }) : super(key: key);
 
   final Color? primaryColor;
   final IconData firstButtonIcon;
-  final IconData secondButtonIcon;
-  final IconData thirdButtonIcon;
+  final IconData? secondButtonIcon;
+  final IconData? thirdButtonIcon;
   final Color? firstButtonColor;
   final Color? firstIconColor;
   final Color? secondButtonColor;
@@ -29,8 +29,8 @@ class CustomFAB extends StatefulWidget {
   final Color? thirdButtonColor;
   final Color? thirdIconColor;
   final Function() firstOnClick;
-  final Function() secondOnClick;
-  final Function() thirdOnClick;
+  final Function()? secondOnClick;
+  final Function()? thirdOnClick;
 
   @override
   State<CustomFAB> createState() => _CustomFABState();
@@ -39,7 +39,7 @@ class CustomFAB extends StatefulWidget {
 class _CustomFABState extends State<CustomFAB> with SingleTickerProviderStateMixin {
   int _angle = 90;
   bool _isRotated = true;
-
+  var buttonLength = 1;
   AnimationController? _controller;
   Animation<double>? _animation;
   Animation<double>? _animation2;
@@ -47,6 +47,16 @@ class _CustomFABState extends State<CustomFAB> with SingleTickerProviderStateMix
 
   @override
   void initState() {
+
+    if(widget.secondButtonIcon == null || widget.secondOnClick == null){
+      buttonLength = 1;
+    } else if(widget.thirdButtonIcon == null || widget.thirdOnClick == null){
+      buttonLength = 2;
+    } else {
+      buttonLength = 3;
+    }
+
+
     _controller = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 180),
@@ -88,12 +98,12 @@ class _CustomFABState extends State<CustomFAB> with SingleTickerProviderStateMix
   Widget build(BuildContext context) {
     return Stack(children: <Widget>[
       Positioned(
-          bottom: 210.0,
+          bottom: 80.0,
           right: 10.0,
           child: Row(
             children: <Widget>[
               ScaleTransition(
-                scale: _animation3!,
+                scale: _animation!,
                 alignment: FractionalOffset.center,
                 child: GestureDetector(
                   onTap: () {
@@ -134,7 +144,7 @@ class _CustomFABState extends State<CustomFAB> with SingleTickerProviderStateMix
               ),
             ],
           )),
-      Positioned(
+      buttonLength > 1 ? Positioned(
           bottom: 145.0,
           right: 10.0,
           child: Row(
@@ -145,7 +155,7 @@ class _CustomFABState extends State<CustomFAB> with SingleTickerProviderStateMix
                 child: GestureDetector(
                   onTap: () {
                     if (_angle == 45.0) {
-                      widget.secondOnClick();
+                      widget.secondOnClick!();
                       _rotate();
                     }
                   },
@@ -180,19 +190,19 @@ class _CustomFABState extends State<CustomFAB> with SingleTickerProviderStateMix
                 ),
               ),
             ],
-          )),
-      Positioned(
-          bottom: 80.0,
+          )) : Container(),
+      buttonLength > 2 ? Positioned(
+          bottom: 210.0,
           right: 10.0,
           child: Row(
             children: <Widget>[
               ScaleTransition(
-                scale: _animation!,
+                scale: _animation3!,
                 alignment: FractionalOffset.center,
                 child: GestureDetector(
                   onTap: () {
                     if (_angle == 45.0) {
-                      widget.thirdOnClick();
+                      widget.thirdOnClick!();
                       _rotate();
                     }
                   },
@@ -226,7 +236,7 @@ class _CustomFABState extends State<CustomFAB> with SingleTickerProviderStateMix
                 ),
               ),
             ],
-          )),
+          )) : Container(),
       Positioned(
         bottom: 10.0,
         right: 10.0,

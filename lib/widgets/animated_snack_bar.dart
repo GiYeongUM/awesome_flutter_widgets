@@ -434,7 +434,7 @@ class _FailSnackBarFirstWidgetState extends State<FailSnackBarFirstWidget> with 
   }
 
   void _handleAnimation() {
-    _showCheck();
+    _showIcon();
     Future.delayed(const Duration(milliseconds: 800), (){
       setState(() {
         changeAnimationStart = true;
@@ -447,7 +447,7 @@ class _FailSnackBarFirstWidgetState extends State<FailSnackBarFirstWidget> with 
     });
   }
 
-  void _showCheck() {
+  void _showIcon() {
     _animationController.forward();
   }
 
@@ -564,14 +564,14 @@ class _FailSnackBarSecondWidgetState extends State<FailSnackBarSecondWidget> wit
 
   void _handleAnimation() {
     Future.delayed(const Duration(milliseconds: 300), (){
-      _showCheck();
+      _showIcon();
       setState(() {
         fadeAnimationStart = true;
       });
     });
   }
 
-  void _showCheck() {
+  void _showIcon() {
     _animationController.forward();
   }
 
@@ -690,7 +690,7 @@ class _AlertSnackBarFirstWidgetState extends State<AlertSnackBarFirstWidget> wit
   }
 
   void _handleAnimation() {
-    _showCheck();
+    _showIcon();
     Future.delayed(const Duration(milliseconds: 800), (){
       setState(() {
         changeAnimationStart = true;
@@ -703,7 +703,7 @@ class _AlertSnackBarFirstWidgetState extends State<AlertSnackBarFirstWidget> wit
     });
   }
 
-  void _showCheck() {
+  void _showIcon() {
     _animationController.forward();
   }
 
@@ -820,14 +820,14 @@ class _AlertSnackBarSecondWidgetState extends State<AlertSnackBarSecondWidget> w
 
   void _handleAnimation() {
     Future.delayed(const Duration(milliseconds: 300), (){
-      _showCheck();
+      _showIcon();
       setState(() {
         fadeAnimationStart = true;
       });
     });
   }
 
-  void _showCheck() {
+  void _showIcon() {
     _animationController.forward();
   }
 
