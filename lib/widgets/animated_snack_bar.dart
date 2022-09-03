@@ -1,12 +1,12 @@
-import 'dart:ui';
-
+import 'package:awesome_flutter_widgets/widgets/custom_animated_icons.dart';
 import 'package:flutter/material.dart';
 enum SnackBarType {
   saveFirstAnimation,
   saveSecondAnimation,
   failFirstAnimation,
   failSecondAnimation,
-
+  alertFirstAnimation,
+  alertSecondAnimation,
 }
 class AnimatedSnackBar {
   static style1({
@@ -93,13 +93,42 @@ class AnimatedSnackBar {
           ),
         ));
         break;
+      case SnackBarType.alertFirstAnimation:
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          duration: duration ?? const Duration(seconds: 3),
+          dismissDirection: direction ?? DismissDirection.down,
+          behavior: SnackBarBehavior.fixed,
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          content: AlertSnackBarFirstWidget(onPressed: () {
+            ScaffoldMessenger.of(context).removeCurrentSnackBar();
+          },
+            label: label ?? "",
+            primaryColor: primaryColor ?? Colors.black,
+            titleTextStyle: titleTextStyle,
+          ),
+        ));
+        break;
+      case SnackBarType.alertSecondAnimation:
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          duration: duration ?? const Duration(seconds: 3),
+          dismissDirection: direction ?? DismissDirection.down,
+          behavior: SnackBarBehavior.fixed,
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          content: AlertSnackBarSecondWidget(onPressed: () {
+            ScaffoldMessenger.of(context).removeCurrentSnackBar();
+          },
+            label: label ?? "",
+            primaryColor: primaryColor ?? Colors.black,
+            titleTextStyle: titleTextStyle,
+          ),
+        ));
+        break;
     }
 
   }
 }
-
-
-
 
 class SaveSnackBarFirstWidget extends StatefulWidget implements SnackBarAction {
   const SaveSnackBarFirstWidget({
@@ -150,7 +179,7 @@ class _SaveSnackBarFirstWidgetState extends State<SaveSnackBarFirstWidget> with 
   }
 
   void _handleAnimation() {
-    _showCheck();
+    _showAnimation();
     Future.delayed(const Duration(milliseconds: 800), (){
       setState(() {
         changeAnimationStart = true;
@@ -163,7 +192,7 @@ class _SaveSnackBarFirstWidgetState extends State<SaveSnackBarFirstWidget> with 
     });
   }
 
-  void _showCheck() {
+  void _showAnimation() {
     _animationController.forward();
   }
 
@@ -186,7 +215,7 @@ class _SaveSnackBarFirstWidgetState extends State<SaveSnackBarFirstWidget> with 
               height: 50,
               width: 40,
               child: Center(
-                  child: AnimatedIcons(
+                  child: CustomAnimatedIcons(
                     color: widget.primaryColor,
                     progress: _animation,
                     size: 40,
@@ -204,7 +233,7 @@ class _SaveSnackBarFirstWidgetState extends State<SaveSnackBarFirstWidget> with 
                     width: 40,
                     child: AnimatedContainer(
                       duration: const Duration(milliseconds: 400),
-                      child: AnimatedIcons(
+                      child: CustomAnimatedIcons(
                         color: fadeAnimationStart ? Colors.white : widget.primaryColor,
                         progress: _animation,
                         size: 40,
@@ -280,14 +309,14 @@ class _SaveSnackBarSecondWidgetState extends State<SaveSnackBarSecondWidget> wit
 
   void _handleAnimation() {
     Future.delayed(const Duration(milliseconds: 300), (){
-      _showFail();
+      _shonwAnimation();
       setState(() {
         fadeAnimationStart = true;
       });
     });
   }
 
-  void _showFail() {
+  void _shonwAnimation() {
     _animationController.forward();
   }
 
@@ -317,7 +346,7 @@ class _SaveSnackBarSecondWidgetState extends State<SaveSnackBarSecondWidget> wit
                         backgroundColor: Colors.white.withOpacity(0),
                         child: AnimatedContainer(
                           duration: const Duration(milliseconds: 400),
-                          child: AnimatedIcons(
+                          child: CustomAnimatedIcons(
                             color: fadeAnimationStart ? Colors.white : widget.primaryColor,
                             progress: _animation,
                             size: 40,
@@ -355,7 +384,6 @@ class _SaveSnackBarSecondWidgetState extends State<SaveSnackBarSecondWidget> wit
     );
   }
 }
-
 
 class FailSnackBarFirstWidget extends StatefulWidget implements SnackBarAction {
   const FailSnackBarFirstWidget({
@@ -442,7 +470,7 @@ class _FailSnackBarFirstWidgetState extends State<FailSnackBarFirstWidget> with 
               height: 50,
               width: 40,
               child: Center(
-                  child: AnimatedIcons(
+                  child: CustomAnimatedIcons(
                     color: widget.primaryColor,
                     progress: _animation,
                     size: 40,
@@ -460,7 +488,7 @@ class _FailSnackBarFirstWidgetState extends State<FailSnackBarFirstWidget> with 
                     width: 40,
                     child: AnimatedContainer(
                       duration: const Duration(milliseconds: 400),
-                      child: AnimatedIcons(
+                      child: CustomAnimatedIcons(
                         color: fadeAnimationStart ? Colors.white : widget.primaryColor,
                         progress: _animation,
                         size: 40,
@@ -573,7 +601,7 @@ class _FailSnackBarSecondWidgetState extends State<FailSnackBarSecondWidget> wit
                         backgroundColor: Colors.white.withOpacity(0),
                         child: AnimatedContainer(
                           duration: const Duration(milliseconds: 400),
-                          child: AnimatedIcons(
+                          child: CustomAnimatedIcons(
                             color: fadeAnimationStart ? Colors.white : widget.primaryColor,
                             progress: _animation,
                             size: 40,
@@ -612,294 +640,259 @@ class _FailSnackBarSecondWidgetState extends State<FailSnackBarSecondWidget> wit
   }
 }
 
-enum IconType {
-  check,
-  fail,
-  alert,
-}
 
-class AnimatedIcons extends StatefulWidget {
-  final Animation<double> progress;
-  final double size;
-  final Color? color;
-  final double? strokeWidth;
-  final IconType iconType;
-
-  const AnimatedIcons({
+class AlertSnackBarFirstWidget extends StatefulWidget implements SnackBarAction {
+  const AlertSnackBarFirstWidget({
     Key? key,
-    required this.progress,
-    required this.size,
-    this.color,
-    this.strokeWidth, required this.iconType}) : super(key: key);
+    this.textColor,
+    this.disabledTextColor,
+    required this.label,
+    required this.onPressed,
+    this.primaryColor = Colors.black,
+    this.titleTextStyle,
+  }) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => AnimatedIconsState();
+  final Color? textColor;
+
+  @override
+  final Color? disabledTextColor;
+
+  @override
+  final String label;
+
+  @override
+  final VoidCallback onPressed;
+
+  final Color primaryColor;
+  final TextStyle? titleTextStyle;
+
+
+  @override
+  State<AlertSnackBarFirstWidget> createState() => _AlertSnackBarFirstWidgetState();
 }
 
-class AnimatedIconsState extends State<AnimatedIcons> with SingleTickerProviderStateMixin {
+class _AlertSnackBarFirstWidgetState extends State<AlertSnackBarFirstWidget> with SingleTickerProviderStateMixin {
+  var changeAnimationStart = false;
+  var fadeAnimationStart = false;
+
+  late AnimationController _animationController;
+  late Animation<double> _animation;
+
 
   @override
-  void initState() {
+  void initState()  {
+    _animationController = AnimationController(vsync: this, duration: const Duration(milliseconds: 700));
+    _animation = Tween<double>(begin: 0, end: 1).animate(CurvedAnimation(parent: _animationController, curve: Curves.easeInOutCirc));
+    _handleAnimation();
+
     super.initState();
+  }
+
+  void _handleAnimation() {
+    _showCheck();
+    Future.delayed(const Duration(milliseconds: 800), (){
+      setState(() {
+        changeAnimationStart = true;
+      });
+      Future.delayed(const Duration(milliseconds: 50), (){
+        setState(() {
+          fadeAnimationStart = true;
+        });
+      });
+    });
+  }
+
+  void _showCheck() {
+    _animationController.forward();
   }
 
   @override
   Widget build(BuildContext context) {
-    final ThemeData theme = Theme.of(context);
-    switch(widget.iconType) {
-      case IconType.check:
-        return CustomPaint(
-            foregroundPainter: AnimatedCheckPathPainter(widget.progress, widget.color ?? theme.primaryColor, widget.strokeWidth),
-            child: SizedBox(
-              width: widget.size,
-              height: widget.size,
-            )
-        );
-      case IconType.fail:
-        return CustomPaint(
-            foregroundPainter: AnimatedClosePathPainter(widget.progress, widget.color ?? theme.primaryColor, widget.strokeWidth),
-            child: SizedBox(
-              width: widget.size,
-              height: widget.size,
-            )
-        );
-      case IconType.alert:
-        return CustomPaint(
-            foregroundPainter: AnimatedAlertPathPainter(widget.progress, widget.color ?? theme.primaryColor, widget.strokeWidth),
-            child: SizedBox(
-              width: widget.size,
-              height: widget.size,
-            )
-        );
-    }
-
+    return InkWell(
+      onTap: widget.onPressed,
+      child: ClipRRect(
+        clipBehavior: Clip.antiAliasWithSaveLayer,
+        borderRadius: BorderRadius.circular(15),
+        child: AnimatedContainer(
+          color: changeAnimationStart ? widget.primaryColor : Colors.white.withOpacity(0),
+          curve: Curves.easeOut,
+          duration: const Duration(milliseconds: 200),
+          height: 50,
+          child: !changeAnimationStart ? Align(
+            alignment: Alignment.centerLeft,
+            child: Container(
+              margin: const EdgeInsets.only(left: 8),
+              height: 50,
+              width: 40,
+              child: Center(
+                  child: CustomAnimatedIcons(
+                    color: widget.primaryColor,
+                    progress: _animation,
+                    size: 40,
+                    iconType: IconType.alert,
+                  )),
+            ),
+          ) : SizedBox(
+            height: 50,
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Center(
+                  child: Container(
+                    margin: const EdgeInsets.only(left: 8),
+                    width: 40,
+                    child: AnimatedContainer(
+                      duration: const Duration(milliseconds: 400),
+                      child: CustomAnimatedIcons(
+                        color: fadeAnimationStart ? Colors.white : widget.primaryColor,
+                        progress: _animation,
+                        size: 40,
+                        iconType: IconType.alert,
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 8),
+                AnimatedContainer(
+                  margin: EdgeInsets.only(left: fadeAnimationStart ? 0 : 10),
+                  duration: const Duration(milliseconds: 300),
+                  child: AnimatedOpacity(
+                    duration: const Duration(milliseconds: 300),
+                    opacity: fadeAnimationStart ? 1.0 : 0.0,
+                    child: Text(widget.label,
+                        overflow: TextOverflow.ellipsis,
+                        style: widget.titleTextStyle ?? TextStyle(fontSize: 16, color: widget.primaryColor == Colors.white ? Colors.black : Colors.white)),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }
 
-class AnimatedCheckPathPainter extends CustomPainter {
-  final Animation<double> _animation;
-  final Color _color;
-  final double? strokeWidth;
-
-  AnimatedCheckPathPainter(this._animation, this._color, this.strokeWidth) : super(repaint: _animation);
-
-  Path _createAnyPath(Size size) {
-    return Path()
-      ..moveTo(0.27083 * size.width, 0.54167 * size.height)
-      ..lineTo(0.41667 * size.width, 0.68750 * size.height)
-      ..lineTo(0.75000 * size.width, 0.35417 * size.height);
-  }
-
-  Path createAnimatedPath(Path originalPath, double animationPercent) {
-    final totalLength = originalPath
-        .computeMetrics()
-        .fold(0.0, (double prev, PathMetric metric) => prev + metric.length);
-
-    final currentLength = totalLength * animationPercent;
-
-    return extractPathUntilLength(originalPath, currentLength);
-  }
-
-  Path extractPathUntilLength(Path originalPath, double length) {
-    var currentLength = 0.0;
-
-    final path = Path();
-
-    var metricsIterator = originalPath.computeMetrics().iterator;
-
-    while (metricsIterator.moveNext()) {
-      var metric = metricsIterator.current;
-
-      var nextLength = currentLength + metric.length;
-
-      final isLastSegment = nextLength > length;
-      if (isLastSegment) {
-        final remainingLength = length - currentLength;
-        final pathSegment = metric.extractPath(0.0, remainingLength);
-
-        path.addPath(pathSegment, Offset.zero);
-        break;
-      } else {
-
-        final pathSegment = metric.extractPath(0.0, metric.length);
-        path.addPath(pathSegment, Offset.zero);
-      }
-
-      currentLength = nextLength;
-    }
-
-    return path;
-  }
+class AlertSnackBarSecondWidget extends StatefulWidget implements SnackBarAction {
+  const AlertSnackBarSecondWidget({
+    Key? key,
+    this.textColor,
+    this.disabledTextColor,
+    required this.label,
+    required this.onPressed,
+    this.primaryColor = Colors.black, this.titleTextStyle,
+  }) : super(key: key);
 
   @override
-  void paint(Canvas canvas, Size size) {
-    final animationPercent = _animation.value;
-
-    final path = createAnimatedPath(_createAnyPath(size), animationPercent);
-
-    final Paint paint = Paint();
-    paint.color = _color;
-    paint.style = PaintingStyle.stroke;
-    paint.strokeWidth = strokeWidth ?? size.width * 0.06;
-
-    canvas.drawPath(path, paint);
-  }
+  final Color? textColor;
 
   @override
-  bool shouldRepaint(CustomPainter oldDelegate) {
-    return true;
-  }
+  final Color? disabledTextColor;
+
+  @override
+  final String label;
+
+  @override
+  final VoidCallback onPressed;
+
+  final Color primaryColor;
+  final TextStyle? titleTextStyle;
+
+
+  @override
+  State<AlertSnackBarSecondWidget> createState() => _AlertSnackBarSecondWidgetState();
 }
 
-class AnimatedClosePathPainter extends CustomPainter {
-  final Animation<double> _animation;
-  final Color _color;
-  final double? strokeWidth;
+class _AlertSnackBarSecondWidgetState extends State<AlertSnackBarSecondWidget> with SingleTickerProviderStateMixin {
+  var fadeAnimationStart = false;
 
-  AnimatedClosePathPainter(this._animation, this._color, this.strokeWidth) : super(repaint: _animation);
+  late AnimationController _animationController;
+  late Animation<double> _animation;
 
-  Path _createAnyPath(Size size) {
-    return Path()
-      ..moveTo(0.7 * size.width, 0.3 * size.height)
-      ..lineTo(0.3 * size.width, 0.7 * size.height)
-      ..moveTo(0.3* size.width, 0.3 * size.height)
-      ..lineTo(0.7 * size.width, 0.7 * size.height);
+  @override
+  void initState()  {
+    _animationController = AnimationController(vsync: this, duration: const Duration(milliseconds: 700));
+    _animation = Tween<double>(begin: 0, end: 1).animate(CurvedAnimation(parent: _animationController, curve: Curves.easeInOutCirc));
+    _handleAnimation();
+    super.initState();
   }
 
-  Path createAnimatedPath(Path originalPath, double animationPercent) {
-    final totalLength = originalPath
-        .computeMetrics()
-        .fold(0.0, (double prev, PathMetric metric) => prev + metric.length);
-
-    final currentLength = totalLength * animationPercent;
-
-    return extractPathUntilLength(originalPath, currentLength);
+  void _handleAnimation() {
+    Future.delayed(const Duration(milliseconds: 300), (){
+      _showCheck();
+      setState(() {
+        fadeAnimationStart = true;
+      });
+    });
   }
 
-  Path extractPathUntilLength(Path originalPath, double length) {
-    var currentLength = 0.0;
-
-    final path = Path();
-
-    var metricsIterator = originalPath.computeMetrics().iterator;
-
-    while (metricsIterator.moveNext()) {
-      var metric = metricsIterator.current;
-
-      var nextLength = currentLength + metric.length;
-
-      final isLastSegment = nextLength > length;
-      if (isLastSegment) {
-        final remainingLength = length - currentLength;
-        final pathSegment = metric.extractPath(0.0, remainingLength);
-
-        path.addPath(pathSegment, Offset.zero);
-        break;
-      } else {
-
-        final pathSegment = metric.extractPath(0.0, metric.length);
-        path.addPath(pathSegment, Offset.zero);
-      }
-
-      currentLength = nextLength;
-    }
-
-    return path;
+  void _showCheck() {
+    _animationController.forward();
   }
 
   @override
-  void paint(Canvas canvas, Size size) {
-    final animationPercent = _animation.value;
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: widget.onPressed,
+      child: ClipRRect(
+        clipBehavior: Clip.antiAliasWithSaveLayer,
+        borderRadius: BorderRadius.circular(15),
+        child: AnimatedContainer(
+          color: widget.primaryColor,
+          curve: Curves.easeInOut,
+          duration: const Duration(milliseconds: 400),
+          height: 50,
+          child: SizedBox(
+            height: 50,
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Center(
+                  child: Container(
+                    margin: const EdgeInsets.only(left: 8),
+                    width: 40,
+                    child: CircleAvatar(
+                        radius: 20,
+                        backgroundColor: Colors.white.withOpacity(0),
+                        child: AnimatedContainer(
+                          duration: const Duration(milliseconds: 400),
+                          child: CustomAnimatedIcons(
+                            color: fadeAnimationStart ? Colors.white : widget.primaryColor,
+                            progress: _animation,
+                            size: 40,
+                            iconType: IconType.alert,
+                          ),
+                        )),
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    AnimatedContainer(
+                      margin: EdgeInsets.only(left: fadeAnimationStart ? 0 : 10),
+                      duration: const Duration(milliseconds: 400),
+                      child: AnimatedOpacity(
+                        duration: const Duration(milliseconds: 400),
+                        opacity: fadeAnimationStart ? 1.0 : 0.0,
+                        child: Text(widget.label,
+                            overflow: TextOverflow.visible,
+                            maxLines: 1,
+                            style: widget.titleTextStyle ??
+                                const TextStyle(fontSize: 16, color: Colors.white)),
+                      ),
+                    ),
+                  ],
+                ),
 
-    final path = createAnimatedPath(_createAnyPath(size), animationPercent);
-
-    final Paint paint = Paint();
-    paint.color = _color;
-    paint.style = PaintingStyle.stroke;
-    paint.strokeWidth = strokeWidth ?? size.width * 0.06;
-
-    canvas.drawPath(path, paint);
-  }
-
-  @override
-  bool shouldRepaint(CustomPainter oldDelegate) {
-    return true;
-  }
-}
-
-class AnimatedAlertPathPainter extends CustomPainter {
-  final Animation<double> _animation;
-  final Color _color;
-  final double? strokeWidth;
-
-  AnimatedAlertPathPainter(this._animation, this._color, this.strokeWidth) : super(repaint: _animation);
-
-  Path _createAnyPath(Size size) {
-    return Path()
-      ..addOval(Rect.fromCircle(
-        center: Offset(0.5 * size.width, 0.5 * size.height),
-        radius: (size.width + size.height) / 6,
-      ));
-  }
-
-  Path createAnimatedPath(Path originalPath, double animationPercent) {
-    final totalLength = originalPath
-        .computeMetrics()
-        .fold(0.0, (double prev, PathMetric metric) => prev + metric.length);
-
-    final currentLength = totalLength * animationPercent;
-
-    return extractPathUntilLength(originalPath, currentLength);
-  }
-
-  Path extractPathUntilLength(Path originalPath, double length) {
-    var currentLength = 0.0;
-
-    final path = Path();
-
-    var metricsIterator = originalPath.computeMetrics().iterator;
-
-    while (metricsIterator.moveNext()) {
-      var metric = metricsIterator.current;
-
-      var nextLength = currentLength + metric.length;
-
-      final isLastSegment = nextLength > length;
-      if (isLastSegment) {
-        final remainingLength = length - currentLength;
-        final pathSegment = metric.extractPath(0.0, remainingLength);
-
-        path.addPath(pathSegment, Offset.zero);
-        break;
-      } else {
-
-        final pathSegment = metric.extractPath(0.0, metric.length);
-        path.addPath(pathSegment, Offset.zero);
-      }
-
-      currentLength = nextLength;
-    }
-
-    return path;
-  }
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final animationPercent = _animation.value;
-
-    final path = createAnimatedPath(_createAnyPath(size), animationPercent);
-
-    final Paint paint = Paint();
-    paint.color = _color;
-    paint.style = PaintingStyle.stroke;
-    paint.strokeWidth = strokeWidth ?? size.width * 0.06;
-
-    canvas.drawPath(path, paint);
-  }
-
-  @override
-  bool shouldRepaint(CustomPainter oldDelegate) {
-    return true;
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }
 

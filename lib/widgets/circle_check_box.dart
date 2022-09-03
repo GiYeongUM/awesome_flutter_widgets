@@ -10,7 +10,7 @@ class CircleCheckBox extends StatefulWidget {
   const CircleCheckBox({Key? key, required this.onChanged, this.isSelected = false, this.enable = true, this.changeColor = Colors.black, this.selectColor = Colors.blue}): super(key: key);
 
   @override
-  _CircleCheckBoxState createState() => _CircleCheckBoxState();
+  State<CircleCheckBox> createState() => _CircleCheckBoxState();
 }
 
 class _CircleCheckBoxState extends State<CircleCheckBox> {

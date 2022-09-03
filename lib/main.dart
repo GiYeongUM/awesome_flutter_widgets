@@ -52,32 +52,34 @@ class _MyHomePageState extends State<MyHomePage> {
                 margin: const EdgeInsets.symmetric(vertical: 16),
                 child: ElevatedButton(
                   onPressed: () {
-                      AnimatedSnackBar.style1(context: context, label: "Save failed!", snackBarType: SnackBarType.saveSecondAnimation);
+                      AnimatedSnackBar.style1(context: context, label: "Saved successfully", snackBarType: SnackBarType.saveSecondAnimation);
                   },
                   child: const Text("Save"),
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.symmetric(vertical: 16),
+                child: ElevatedButton(
+                  onPressed: () {
+                    AnimatedSnackBar.style1(context: context, label: "Save failed", snackBarType: SnackBarType.failSecondAnimation);
+                  },
+                  child: const Text("Fail"),
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.symmetric(vertical: 16),
+                child: ElevatedButton(
+                  onPressed: () {
+                    AnimatedSnackBar.style1(context: context, label: "Check password", snackBarType: SnackBarType.alertSecondAnimation);
+                  },
+                  child: const Text("Alert"),
                 ),
               ),
             ],
           ),
         ),
       ),
-      // floatingActionButton: CustomFAB(
-      //   firstButtonIcon: Icons.add_photo_alternate_outlined,
-      //   secondButtonIcon: Icons.camera_alt,
-      //   thirdButtonIcon: Icons.delete,
-      //   thirdIconColor: Colors.red,
-      //   firstOnClick: (){
-      //     showDialog(context: context, builder: (context) {
-      //       return const CustomDialog(
-      //           title: "알림",
-      //           content: "내용입니다.",
-      //           titleStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-      //       );});
-      //     },
-      //   secondOnClick: (){
-      //   },
-      //   thirdOnClick: (){print("third");},
-      // ),
+     
     );
   }
 }
