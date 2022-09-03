@@ -309,14 +309,14 @@ class _SaveSnackBarSecondWidgetState extends State<SaveSnackBarSecondWidget> wit
 
   void _handleAnimation() {
     Future.delayed(const Duration(milliseconds: 300), (){
-      _shonwAnimation();
+      _showAnimation();
       setState(() {
         fadeAnimationStart = true;
       });
     });
   }
 
-  void _shonwAnimation() {
+  void _showAnimation() {
     _animationController.forward();
   }
 
