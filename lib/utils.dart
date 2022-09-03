@@ -53,20 +53,20 @@
     if (value < 10000) {
       final s = (value / 1000).toStringAsFixed(1);
       if (s[s.length - 1] == '0') {
-        return s.substring(0, s.length - 2) + "K";
+        return "${s.substring(0, s.length - 2)}K";
       }
       return s + "K";
     }
     if (value < 1000000) {
-      return (value / 1000).toStringAsFixed(1) + "K";
+      return "${(value / 1000).toStringAsFixed(1)}K";
     }
 
     if (value < 10000000) {
       final s = (value / pow(1000, 2)).toStringAsFixed(1);
       if (s[s.length - 1] == '0') {
-        return s.substring(0, s.length - 2) + "M";
+        return "${s.substring(0, s.length - 2)}M";
       }
-      return s + "M";
+      return "${s}M";
     }
 
     if (value < 1000000000) {
