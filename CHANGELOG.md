@@ -1,3 +1,5 @@
-## 0.0.1+1
+## 0.0.2
 
-* publish project on pub.dev
+* add description on ReadMe.md
+* add custom_snack_bar
+* add custom_animated_icons
