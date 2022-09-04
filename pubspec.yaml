@@ -1,8 +1,8 @@
 name: awesome_flutter_widgets
-description: Awesome Flutter Widgets
+description: Awesome flutter widget is a customized package with easy-to-use, animated widgets from Flutter.
 homepage: https://github.com/GiYeongUM
 repository: https://github.com/GiYeongUM/awesome_flutter_widgets
-version: 0.0.2+4
+version: 0.1.0
 
 environment:
   sdk: ">=2.17.3 <3.0.0"
