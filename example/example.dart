@@ -1,3 +1,4 @@
+import 'package:awesome_flutter_widgets/awesome_flutter_widgets.dart';
 import 'package:awesome_flutter_widgets/widgets/custom_animated_icons.dart';
 import 'package:awesome_flutter_widgets/widgets/custom_dialog.dart';
 import 'package:awesome_flutter_widgets/widgets/custom_fab.dart';
@@ -83,6 +84,19 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
                   child: const Text("Save"),
                 ),
               ),
+              Container(
+                margin: const EdgeInsets.symmetric(vertical: 16),
+                child: ElevatedButton(
+                  onPressed: () {
+                    AnimatedSnackBar.style1(
+                        context: context,
+                        label: "Save successfully",
+                        snackBarType: SnackBarType.saveSecondAnimation
+                    );
+                  },
+                  child: const Text("Save"),
+                ),
+              ),
               CustomAnimatedIcons(
                 color: Colors.green,
                 progress: _animation,
@@ -96,12 +110,7 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
       ),
       floatingActionButton: CustomFAB(
         firstOnClick: () {
-          CustomDialog.dialog(
-              context: context,
-              title: 'Check',
-              content: "Save successfully",
-              iconTitle: true
-          );
+          /// do something!
         },
         firstButtonIcon: Icons.add,
         secondOnClick: () {
