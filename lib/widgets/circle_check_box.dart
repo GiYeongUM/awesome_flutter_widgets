@@ -7,7 +7,14 @@ class CircleCheckBox extends StatefulWidget {
   final Color changeColor;
   final Color selectColor;
 
-  const CircleCheckBox({Key? key, required this.onChanged, this.isSelected = false, this.enable = true, this.changeColor = Colors.black, this.selectColor = Colors.blue}): super(key: key);
+  const CircleCheckBox(
+      {Key? key,
+      required this.onChanged,
+      this.isSelected = false,
+      this.enable = true,
+      this.changeColor = Colors.black,
+      this.selectColor = Colors.blue})
+      : super(key: key);
 
   @override
   State<CircleCheckBox> createState() => _CircleCheckBoxState();
@@ -35,7 +42,7 @@ class _CircleCheckBoxState extends State<CircleCheckBox> {
             decoration: BoxDecoration(
               border: Border.all(
                 width: 1,
-                color: widget.isSelected ? Colors.black: widget.changeColor,
+                color: widget.isSelected ? Colors.black : widget.changeColor,
               ),
               borderRadius: BorderRadius.circular(Checkbox.width),
             ),
@@ -46,7 +53,7 @@ class _CircleCheckBoxState extends State<CircleCheckBox> {
               child: Checkbox(
                 activeColor: widget.selectColor,
                 value: localSelected,
-                onChanged: (value){
+                onChanged: (value) {
                   setState(() {
                     widget.onChanged(value ?? false);
                     localSelected = value ?? false;

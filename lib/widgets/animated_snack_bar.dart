@@ -1,5 +1,6 @@
 import 'package:awesome_flutter_widgets/widgets/custom_animated_icons.dart';
 import 'package:flutter/material.dart';
+
 enum SnackBarType {
   saveFirstAnimation,
   saveSecondAnimation,
@@ -8,6 +9,7 @@ enum SnackBarType {
   alertFirstAnimation,
   alertSecondAnimation,
 }
+
 class AnimatedSnackBar {
   static style1({
     required BuildContext context,
@@ -28,18 +30,18 @@ class AnimatedSnackBar {
     DismissDirection? direction,
     bool? hasLabel,
   }) {
-    switch (snackBarType){
+    switch (snackBarType) {
       case SnackBarType.saveFirstAnimation:
         return ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           duration: duration ?? const Duration(seconds: 3),
-
           dismissDirection: direction ?? DismissDirection.down,
           behavior: SnackBarBehavior.fixed,
           backgroundColor: Colors.transparent,
           elevation: 0,
-          content: SaveSnackBarFirstWidget(onPressed: () {
-            ScaffoldMessenger.of(context).removeCurrentSnackBar();
-          },
+          content: SaveSnackBarFirstWidget(
+            onPressed: () {
+              ScaffoldMessenger.of(context).removeCurrentSnackBar();
+            },
             label: label ?? "",
             primaryColor: primaryColor ?? Colors.green,
             titleTextStyle: titleTextStyle,
@@ -52,10 +54,10 @@ class AnimatedSnackBar {
           behavior: SnackBarBehavior.fixed,
           backgroundColor: Colors.transparent,
           elevation: 0,
-          content: SaveSnackBarSecondWidget(onPressed: () {
-            ScaffoldMessenger.of(context).removeCurrentSnackBar();
-          },
-
+          content: SaveSnackBarSecondWidget(
+            onPressed: () {
+              ScaffoldMessenger.of(context).removeCurrentSnackBar();
+            },
             label: label ?? "",
             primaryColor: primaryColor ?? Colors.green,
             titleTextStyle: titleTextStyle,
@@ -68,9 +70,10 @@ class AnimatedSnackBar {
           behavior: SnackBarBehavior.fixed,
           backgroundColor: Colors.transparent,
           elevation: 0,
-          content: FailSnackBarFirstWidget(onPressed: () {
-            ScaffoldMessenger.of(context).removeCurrentSnackBar();
-          },
+          content: FailSnackBarFirstWidget(
+            onPressed: () {
+              ScaffoldMessenger.of(context).removeCurrentSnackBar();
+            },
             label: label ?? "",
             primaryColor: primaryColor ?? Colors.red,
             titleTextStyle: titleTextStyle,
@@ -84,9 +87,10 @@ class AnimatedSnackBar {
           behavior: SnackBarBehavior.fixed,
           backgroundColor: Colors.transparent,
           elevation: 0,
-          content: FailSnackBarSecondWidget(onPressed: () {
-            ScaffoldMessenger.of(context).removeCurrentSnackBar();
-          },
+          content: FailSnackBarSecondWidget(
+            onPressed: () {
+              ScaffoldMessenger.of(context).removeCurrentSnackBar();
+            },
             label: label ?? "",
             primaryColor: primaryColor ?? Colors.red,
             titleTextStyle: titleTextStyle,
@@ -100,9 +104,10 @@ class AnimatedSnackBar {
           behavior: SnackBarBehavior.fixed,
           backgroundColor: Colors.transparent,
           elevation: 0,
-          content: AlertSnackBarFirstWidget(onPressed: () {
-            ScaffoldMessenger.of(context).removeCurrentSnackBar();
-          },
+          content: AlertSnackBarFirstWidget(
+            onPressed: () {
+              ScaffoldMessenger.of(context).removeCurrentSnackBar();
+            },
             label: label ?? "",
             primaryColor: primaryColor ?? Colors.black,
             titleTextStyle: titleTextStyle,
@@ -116,9 +121,10 @@ class AnimatedSnackBar {
           behavior: SnackBarBehavior.fixed,
           backgroundColor: Colors.transparent,
           elevation: 0,
-          content: AlertSnackBarSecondWidget(onPressed: () {
-            ScaffoldMessenger.of(context).removeCurrentSnackBar();
-          },
+          content: AlertSnackBarSecondWidget(
+            onPressed: () {
+              ScaffoldMessenger.of(context).removeCurrentSnackBar();
+            },
             label: label ?? "",
             primaryColor: primaryColor ?? Colors.black,
             titleTextStyle: titleTextStyle,
@@ -126,7 +132,6 @@ class AnimatedSnackBar {
         ));
         break;
     }
-
   }
 }
 
@@ -156,23 +161,25 @@ class SaveSnackBarFirstWidget extends StatefulWidget implements SnackBarAction {
   final Color primaryColor;
   final TextStyle? titleTextStyle;
 
-
   @override
-  State<SaveSnackBarFirstWidget> createState() => _SaveSnackBarFirstWidgetState();
+  State<SaveSnackBarFirstWidget> createState() =>
+      _SaveSnackBarFirstWidgetState();
 }
 
-class _SaveSnackBarFirstWidgetState extends State<SaveSnackBarFirstWidget> with SingleTickerProviderStateMixin {
+class _SaveSnackBarFirstWidgetState extends State<SaveSnackBarFirstWidget>
+    with SingleTickerProviderStateMixin {
   var changeAnimationStart = false;
   var fadeAnimationStart = false;
 
   late AnimationController _animationController;
   late Animation<double> _animation;
 
-
   @override
-  void initState()  {
-    _animationController = AnimationController(vsync: this, duration: const Duration(milliseconds: 500));
-    _animation = Tween<double>(begin: 0, end: 1).animate(CurvedAnimation(parent: _animationController, curve: Curves.easeInOutCirc));
+  void initState() {
+    _animationController = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 500));
+    _animation = Tween<double>(begin: 0, end: 1).animate(CurvedAnimation(
+        parent: _animationController, curve: Curves.easeInOutCirc));
     _handleAnimation();
 
     super.initState();
@@ -180,11 +187,11 @@ class _SaveSnackBarFirstWidgetState extends State<SaveSnackBarFirstWidget> with 
 
   void _handleAnimation() {
     _showAnimation();
-    Future.delayed(const Duration(milliseconds: 800), (){
+    Future.delayed(const Duration(milliseconds: 800), () {
       setState(() {
         changeAnimationStart = true;
       });
-      Future.delayed(const Duration(milliseconds: 50), (){
+      Future.delayed(const Duration(milliseconds: 50), () {
         setState(() {
           fadeAnimationStart = true;
         });
@@ -204,73 +211,87 @@ class _SaveSnackBarFirstWidgetState extends State<SaveSnackBarFirstWidget> with 
         clipBehavior: Clip.antiAliasWithSaveLayer,
         borderRadius: BorderRadius.circular(15),
         child: AnimatedContainer(
-          color: changeAnimationStart ? widget.primaryColor : Colors.white.withOpacity(0),
+          color: changeAnimationStart
+              ? widget.primaryColor
+              : Colors.white.withOpacity(0),
           curve: Curves.easeOut,
           duration: const Duration(milliseconds: 200),
           height: 50,
-          child: !changeAnimationStart ? Align(
-            alignment: Alignment.centerLeft,
-            child: Container(
-              margin: const EdgeInsets.only(left: 8),
-              height: 50,
-              width: 40,
-              child: Center(
-                  child: CustomAnimatedIcons(
-                    color: widget.primaryColor,
-                    progress: _animation,
-                    size: 40,
-                    iconType: IconType.check,
-                  )),
-            ),
-          ) : SizedBox(
-            height: 50,
-            child: Row(
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Center(
+          child: !changeAnimationStart
+              ? Align(
+                  alignment: Alignment.centerLeft,
                   child: Container(
                     margin: const EdgeInsets.only(left: 8),
+                    height: 50,
                     width: 40,
-                    child: AnimatedContainer(
-                      duration: const Duration(milliseconds: 400),
-                      child: CustomAnimatedIcons(
-                        color: fadeAnimationStart ? Colors.white : widget.primaryColor,
-                        progress: _animation,
-                        size: 40,
-                        iconType: IconType.check,
+                    child: Center(
+                        child: CustomAnimatedIcons(
+                      color: widget.primaryColor,
+                      progress: _animation,
+                      size: 40,
+                      iconType: IconType.check,
+                    )),
+                  ),
+                )
+              : SizedBox(
+                  height: 50,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Center(
+                        child: Container(
+                          margin: const EdgeInsets.only(left: 8),
+                          width: 40,
+                          child: AnimatedContainer(
+                            duration: const Duration(milliseconds: 400),
+                            child: CustomAnimatedIcons(
+                              color: fadeAnimationStart
+                                  ? Colors.white
+                                  : widget.primaryColor,
+                              progress: _animation,
+                              size: 40,
+                              iconType: IconType.check,
+                            ),
+                          ),
+                        ),
                       ),
-                    ),
+                      const SizedBox(width: 8),
+                      AnimatedContainer(
+                        margin:
+                            EdgeInsets.only(left: fadeAnimationStart ? 0 : 10),
+                        duration: const Duration(milliseconds: 300),
+                        child: AnimatedOpacity(
+                          duration: const Duration(milliseconds: 300),
+                          opacity: fadeAnimationStart ? 1.0 : 0.0,
+                          child: Text(widget.label,
+                              overflow: TextOverflow.ellipsis,
+                              style: widget.titleTextStyle ??
+                                  TextStyle(
+                                      fontSize: 16,
+                                      color: widget.primaryColor == Colors.white
+                                          ? Colors.black
+                                          : Colors.white)),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                const SizedBox(width: 8),
-                AnimatedContainer(
-                  margin: EdgeInsets.only(left: fadeAnimationStart ? 0 : 10),
-                  duration: const Duration(milliseconds: 300),
-                  child: AnimatedOpacity(
-                    duration: const Duration(milliseconds: 300),
-                    opacity: fadeAnimationStart ? 1.0 : 0.0,
-                    child: Text(widget.label,
-                        overflow: TextOverflow.ellipsis,
-                        style: widget.titleTextStyle ?? TextStyle(fontSize: 16, color: widget.primaryColor == Colors.white ? Colors.black : Colors.white)),
-                  ),
-                ),
-              ],
-            ),
-          ),
         ),
       ),
     );
   }
 }
 
-class SaveSnackBarSecondWidget extends StatefulWidget implements SnackBarAction {
+class SaveSnackBarSecondWidget extends StatefulWidget
+    implements SnackBarAction {
   const SaveSnackBarSecondWidget({
     Key? key,
     this.textColor,
     this.disabledTextColor,
     required this.label,
     required this.onPressed,
-    this.primaryColor = Colors.green, this.titleTextStyle,
+    this.primaryColor = Colors.green,
+    this.titleTextStyle,
   }) : super(key: key);
 
   @override
@@ -288,27 +309,30 @@ class SaveSnackBarSecondWidget extends StatefulWidget implements SnackBarAction 
   final Color primaryColor;
   final TextStyle? titleTextStyle;
 
-
   @override
-  State<SaveSnackBarSecondWidget> createState() => _SaveSnackBarSecondWidgetState();
+  State<SaveSnackBarSecondWidget> createState() =>
+      _SaveSnackBarSecondWidgetState();
 }
 
-class _SaveSnackBarSecondWidgetState extends State<SaveSnackBarSecondWidget> with SingleTickerProviderStateMixin {
+class _SaveSnackBarSecondWidgetState extends State<SaveSnackBarSecondWidget>
+    with SingleTickerProviderStateMixin {
   var fadeAnimationStart = false;
 
   late AnimationController _animationController;
   late Animation<double> _animation;
 
   @override
-  void initState()  {
-    _animationController = AnimationController(vsync: this, duration: const Duration(milliseconds: 500));
-    _animation = Tween<double>(begin: 0, end: 1).animate(CurvedAnimation(parent: _animationController, curve: Curves.easeInOutCirc));
+  void initState() {
+    _animationController = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 500));
+    _animation = Tween<double>(begin: 0, end: 1).animate(CurvedAnimation(
+        parent: _animationController, curve: Curves.easeInOutCirc));
     _handleAnimation();
     super.initState();
   }
 
   void _handleAnimation() {
-    Future.delayed(const Duration(milliseconds: 300), (){
+    Future.delayed(const Duration(milliseconds: 300), () {
       _showAnimation();
       setState(() {
         fadeAnimationStart = true;
@@ -347,7 +371,9 @@ class _SaveSnackBarSecondWidgetState extends State<SaveSnackBarSecondWidget> wit
                         child: AnimatedContainer(
                           duration: const Duration(milliseconds: 400),
                           child: CustomAnimatedIcons(
-                            color: fadeAnimationStart ? Colors.white : widget.primaryColor,
+                            color: fadeAnimationStart
+                                ? Colors.white
+                                : widget.primaryColor,
                             progress: _animation,
                             size: 40,
                             iconType: IconType.check,
@@ -361,7 +387,8 @@ class _SaveSnackBarSecondWidgetState extends State<SaveSnackBarSecondWidget> wit
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     AnimatedContainer(
-                      margin: EdgeInsets.only(left: fadeAnimationStart ? 0 : 10),
+                      margin:
+                          EdgeInsets.only(left: fadeAnimationStart ? 0 : 10),
                       duration: const Duration(milliseconds: 400),
                       child: AnimatedOpacity(
                         duration: const Duration(milliseconds: 400),
@@ -370,12 +397,12 @@ class _SaveSnackBarSecondWidgetState extends State<SaveSnackBarSecondWidget> wit
                             overflow: TextOverflow.visible,
                             maxLines: 1,
                             style: widget.titleTextStyle ??
-                                const TextStyle(fontSize: 16, color: Colors.white)),
+                                const TextStyle(
+                                    fontSize: 16, color: Colors.white)),
                       ),
                     ),
                   ],
                 ),
-
               ],
             ),
           ),
@@ -411,23 +438,25 @@ class FailSnackBarFirstWidget extends StatefulWidget implements SnackBarAction {
   final Color primaryColor;
   final TextStyle? titleTextStyle;
 
-
   @override
-  State<FailSnackBarFirstWidget> createState() => _FailSnackBarFirstWidgetState();
+  State<FailSnackBarFirstWidget> createState() =>
+      _FailSnackBarFirstWidgetState();
 }
 
-class _FailSnackBarFirstWidgetState extends State<FailSnackBarFirstWidget> with SingleTickerProviderStateMixin {
+class _FailSnackBarFirstWidgetState extends State<FailSnackBarFirstWidget>
+    with SingleTickerProviderStateMixin {
   var changeAnimationStart = false;
   var fadeAnimationStart = false;
 
   late AnimationController _animationController;
   late Animation<double> _animation;
 
-
   @override
-  void initState()  {
-    _animationController = AnimationController(vsync: this, duration: const Duration(milliseconds: 700));
-    _animation = Tween<double>(begin: 0, end: 1).animate(CurvedAnimation(parent: _animationController, curve: Curves.easeInOutCirc));
+  void initState() {
+    _animationController = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 700));
+    _animation = Tween<double>(begin: 0, end: 1).animate(CurvedAnimation(
+        parent: _animationController, curve: Curves.easeInOutCirc));
     _handleAnimation();
 
     super.initState();
@@ -435,11 +464,11 @@ class _FailSnackBarFirstWidgetState extends State<FailSnackBarFirstWidget> with 
 
   void _handleAnimation() {
     _showIcon();
-    Future.delayed(const Duration(milliseconds: 800), (){
+    Future.delayed(const Duration(milliseconds: 800), () {
       setState(() {
         changeAnimationStart = true;
       });
-      Future.delayed(const Duration(milliseconds: 50), (){
+      Future.delayed(const Duration(milliseconds: 50), () {
         setState(() {
           fadeAnimationStart = true;
         });
@@ -459,73 +488,87 @@ class _FailSnackBarFirstWidgetState extends State<FailSnackBarFirstWidget> with 
         clipBehavior: Clip.antiAliasWithSaveLayer,
         borderRadius: BorderRadius.circular(15),
         child: AnimatedContainer(
-          color: changeAnimationStart ? widget.primaryColor : Colors.white.withOpacity(0),
+          color: changeAnimationStart
+              ? widget.primaryColor
+              : Colors.white.withOpacity(0),
           curve: Curves.easeOut,
           duration: const Duration(milliseconds: 200),
           height: 50,
-          child: !changeAnimationStart ? Align(
-            alignment: Alignment.centerLeft,
-            child: Container(
-              margin: const EdgeInsets.only(left: 8),
-              height: 50,
-              width: 40,
-              child: Center(
-                  child: CustomAnimatedIcons(
-                    color: widget.primaryColor,
-                    progress: _animation,
-                    size: 40,
-                    iconType: IconType.fail,
-                  )),
-            ),
-          ) : SizedBox(
-            height: 50,
-            child: Row(
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Center(
+          child: !changeAnimationStart
+              ? Align(
+                  alignment: Alignment.centerLeft,
                   child: Container(
                     margin: const EdgeInsets.only(left: 8),
+                    height: 50,
                     width: 40,
-                    child: AnimatedContainer(
-                      duration: const Duration(milliseconds: 400),
-                      child: CustomAnimatedIcons(
-                        color: fadeAnimationStart ? Colors.white : widget.primaryColor,
-                        progress: _animation,
-                        size: 40,
-                        iconType: IconType.fail,
+                    child: Center(
+                        child: CustomAnimatedIcons(
+                      color: widget.primaryColor,
+                      progress: _animation,
+                      size: 40,
+                      iconType: IconType.fail,
+                    )),
+                  ),
+                )
+              : SizedBox(
+                  height: 50,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Center(
+                        child: Container(
+                          margin: const EdgeInsets.only(left: 8),
+                          width: 40,
+                          child: AnimatedContainer(
+                            duration: const Duration(milliseconds: 400),
+                            child: CustomAnimatedIcons(
+                              color: fadeAnimationStart
+                                  ? Colors.white
+                                  : widget.primaryColor,
+                              progress: _animation,
+                              size: 40,
+                              iconType: IconType.fail,
+                            ),
+                          ),
+                        ),
                       ),
-                    ),
+                      const SizedBox(width: 8),
+                      AnimatedContainer(
+                        margin:
+                            EdgeInsets.only(left: fadeAnimationStart ? 0 : 10),
+                        duration: const Duration(milliseconds: 300),
+                        child: AnimatedOpacity(
+                          duration: const Duration(milliseconds: 300),
+                          opacity: fadeAnimationStart ? 1.0 : 0.0,
+                          child: Text(widget.label,
+                              overflow: TextOverflow.ellipsis,
+                              style: widget.titleTextStyle ??
+                                  TextStyle(
+                                      fontSize: 16,
+                                      color: widget.primaryColor == Colors.white
+                                          ? Colors.black
+                                          : Colors.white)),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                const SizedBox(width: 8),
-                AnimatedContainer(
-                  margin: EdgeInsets.only(left: fadeAnimationStart ? 0 : 10),
-                  duration: const Duration(milliseconds: 300),
-                  child: AnimatedOpacity(
-                    duration: const Duration(milliseconds: 300),
-                    opacity: fadeAnimationStart ? 1.0 : 0.0,
-                    child: Text(widget.label,
-                        overflow: TextOverflow.ellipsis,
-                        style: widget.titleTextStyle ?? TextStyle(fontSize: 16, color: widget.primaryColor == Colors.white ? Colors.black : Colors.white)),
-                  ),
-                ),
-              ],
-            ),
-          ),
         ),
       ),
     );
   }
 }
 
-class FailSnackBarSecondWidget extends StatefulWidget implements SnackBarAction {
+class FailSnackBarSecondWidget extends StatefulWidget
+    implements SnackBarAction {
   const FailSnackBarSecondWidget({
     Key? key,
     this.textColor,
     this.disabledTextColor,
     required this.label,
     required this.onPressed,
-    this.primaryColor = Colors.red, this.titleTextStyle,
+    this.primaryColor = Colors.red,
+    this.titleTextStyle,
   }) : super(key: key);
 
   @override
@@ -543,27 +586,30 @@ class FailSnackBarSecondWidget extends StatefulWidget implements SnackBarAction 
   final Color primaryColor;
   final TextStyle? titleTextStyle;
 
-
   @override
-  State<FailSnackBarSecondWidget> createState() => _FailSnackBarSecondWidgetState();
+  State<FailSnackBarSecondWidget> createState() =>
+      _FailSnackBarSecondWidgetState();
 }
 
-class _FailSnackBarSecondWidgetState extends State<FailSnackBarSecondWidget> with SingleTickerProviderStateMixin {
+class _FailSnackBarSecondWidgetState extends State<FailSnackBarSecondWidget>
+    with SingleTickerProviderStateMixin {
   var fadeAnimationStart = false;
 
   late AnimationController _animationController;
   late Animation<double> _animation;
 
   @override
-  void initState()  {
-    _animationController = AnimationController(vsync: this, duration: const Duration(milliseconds: 700));
-    _animation = Tween<double>(begin: 0, end: 1).animate(CurvedAnimation(parent: _animationController, curve: Curves.easeInOutCirc));
+  void initState() {
+    _animationController = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 700));
+    _animation = Tween<double>(begin: 0, end: 1).animate(CurvedAnimation(
+        parent: _animationController, curve: Curves.easeInOutCirc));
     _handleAnimation();
     super.initState();
   }
 
   void _handleAnimation() {
-    Future.delayed(const Duration(milliseconds: 300), (){
+    Future.delayed(const Duration(milliseconds: 300), () {
       _showIcon();
       setState(() {
         fadeAnimationStart = true;
@@ -602,7 +648,9 @@ class _FailSnackBarSecondWidgetState extends State<FailSnackBarSecondWidget> wit
                         child: AnimatedContainer(
                           duration: const Duration(milliseconds: 400),
                           child: CustomAnimatedIcons(
-                            color: fadeAnimationStart ? Colors.white : widget.primaryColor,
+                            color: fadeAnimationStart
+                                ? Colors.white
+                                : widget.primaryColor,
                             progress: _animation,
                             size: 40,
                             iconType: IconType.fail,
@@ -616,7 +664,8 @@ class _FailSnackBarSecondWidgetState extends State<FailSnackBarSecondWidget> wit
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     AnimatedContainer(
-                      margin: EdgeInsets.only(left: fadeAnimationStart ? 0 : 10),
+                      margin:
+                          EdgeInsets.only(left: fadeAnimationStart ? 0 : 10),
                       duration: const Duration(milliseconds: 400),
                       child: AnimatedOpacity(
                         duration: const Duration(milliseconds: 400),
@@ -625,12 +674,12 @@ class _FailSnackBarSecondWidgetState extends State<FailSnackBarSecondWidget> wit
                             overflow: TextOverflow.visible,
                             maxLines: 1,
                             style: widget.titleTextStyle ??
-                                const TextStyle(fontSize: 16, color: Colors.white)),
+                                const TextStyle(
+                                    fontSize: 16, color: Colors.white)),
                       ),
                     ),
                   ],
                 ),
-
               ],
             ),
           ),
@@ -640,8 +689,8 @@ class _FailSnackBarSecondWidgetState extends State<FailSnackBarSecondWidget> wit
   }
 }
 
-
-class AlertSnackBarFirstWidget extends StatefulWidget implements SnackBarAction {
+class AlertSnackBarFirstWidget extends StatefulWidget
+    implements SnackBarAction {
   const AlertSnackBarFirstWidget({
     Key? key,
     this.textColor,
@@ -667,23 +716,25 @@ class AlertSnackBarFirstWidget extends StatefulWidget implements SnackBarAction 
   final Color primaryColor;
   final TextStyle? titleTextStyle;
 
-
   @override
-  State<AlertSnackBarFirstWidget> createState() => _AlertSnackBarFirstWidgetState();
+  State<AlertSnackBarFirstWidget> createState() =>
+      _AlertSnackBarFirstWidgetState();
 }
 
-class _AlertSnackBarFirstWidgetState extends State<AlertSnackBarFirstWidget> with SingleTickerProviderStateMixin {
+class _AlertSnackBarFirstWidgetState extends State<AlertSnackBarFirstWidget>
+    with SingleTickerProviderStateMixin {
   var changeAnimationStart = false;
   var fadeAnimationStart = false;
 
   late AnimationController _animationController;
   late Animation<double> _animation;
 
-
   @override
-  void initState()  {
-    _animationController = AnimationController(vsync: this, duration: const Duration(milliseconds: 700));
-    _animation = Tween<double>(begin: 0, end: 1).animate(CurvedAnimation(parent: _animationController, curve: Curves.easeInOutCirc));
+  void initState() {
+    _animationController = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 700));
+    _animation = Tween<double>(begin: 0, end: 1).animate(CurvedAnimation(
+        parent: _animationController, curve: Curves.easeInOutCirc));
     _handleAnimation();
 
     super.initState();
@@ -691,11 +742,11 @@ class _AlertSnackBarFirstWidgetState extends State<AlertSnackBarFirstWidget> wit
 
   void _handleAnimation() {
     _showIcon();
-    Future.delayed(const Duration(milliseconds: 800), (){
+    Future.delayed(const Duration(milliseconds: 800), () {
       setState(() {
         changeAnimationStart = true;
       });
-      Future.delayed(const Duration(milliseconds: 50), (){
+      Future.delayed(const Duration(milliseconds: 50), () {
         setState(() {
           fadeAnimationStart = true;
         });
@@ -715,73 +766,87 @@ class _AlertSnackBarFirstWidgetState extends State<AlertSnackBarFirstWidget> wit
         clipBehavior: Clip.antiAliasWithSaveLayer,
         borderRadius: BorderRadius.circular(15),
         child: AnimatedContainer(
-          color: changeAnimationStart ? widget.primaryColor : Colors.white.withOpacity(0),
+          color: changeAnimationStart
+              ? widget.primaryColor
+              : Colors.white.withOpacity(0),
           curve: Curves.easeOut,
           duration: const Duration(milliseconds: 200),
           height: 50,
-          child: !changeAnimationStart ? Align(
-            alignment: Alignment.centerLeft,
-            child: Container(
-              margin: const EdgeInsets.only(left: 8),
-              height: 50,
-              width: 40,
-              child: Center(
-                  child: CustomAnimatedIcons(
-                    color: widget.primaryColor,
-                    progress: _animation,
-                    size: 40,
-                    iconType: IconType.alert,
-                  )),
-            ),
-          ) : SizedBox(
-            height: 50,
-            child: Row(
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Center(
+          child: !changeAnimationStart
+              ? Align(
+                  alignment: Alignment.centerLeft,
                   child: Container(
                     margin: const EdgeInsets.only(left: 8),
+                    height: 50,
                     width: 40,
-                    child: AnimatedContainer(
-                      duration: const Duration(milliseconds: 400),
-                      child: CustomAnimatedIcons(
-                        color: fadeAnimationStart ? Colors.white : widget.primaryColor,
-                        progress: _animation,
-                        size: 40,
-                        iconType: IconType.alert,
+                    child: Center(
+                        child: CustomAnimatedIcons(
+                      color: widget.primaryColor,
+                      progress: _animation,
+                      size: 40,
+                      iconType: IconType.alert,
+                    )),
+                  ),
+                )
+              : SizedBox(
+                  height: 50,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Center(
+                        child: Container(
+                          margin: const EdgeInsets.only(left: 8),
+                          width: 40,
+                          child: AnimatedContainer(
+                            duration: const Duration(milliseconds: 400),
+                            child: CustomAnimatedIcons(
+                              color: fadeAnimationStart
+                                  ? Colors.white
+                                  : widget.primaryColor,
+                              progress: _animation,
+                              size: 40,
+                              iconType: IconType.alert,
+                            ),
+                          ),
+                        ),
                       ),
-                    ),
+                      const SizedBox(width: 8),
+                      AnimatedContainer(
+                        margin:
+                            EdgeInsets.only(left: fadeAnimationStart ? 0 : 10),
+                        duration: const Duration(milliseconds: 300),
+                        child: AnimatedOpacity(
+                          duration: const Duration(milliseconds: 300),
+                          opacity: fadeAnimationStart ? 1.0 : 0.0,
+                          child: Text(widget.label,
+                              overflow: TextOverflow.ellipsis,
+                              style: widget.titleTextStyle ??
+                                  TextStyle(
+                                      fontSize: 16,
+                                      color: widget.primaryColor == Colors.white
+                                          ? Colors.black
+                                          : Colors.white)),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                const SizedBox(width: 8),
-                AnimatedContainer(
-                  margin: EdgeInsets.only(left: fadeAnimationStart ? 0 : 10),
-                  duration: const Duration(milliseconds: 300),
-                  child: AnimatedOpacity(
-                    duration: const Duration(milliseconds: 300),
-                    opacity: fadeAnimationStart ? 1.0 : 0.0,
-                    child: Text(widget.label,
-                        overflow: TextOverflow.ellipsis,
-                        style: widget.titleTextStyle ?? TextStyle(fontSize: 16, color: widget.primaryColor == Colors.white ? Colors.black : Colors.white)),
-                  ),
-                ),
-              ],
-            ),
-          ),
         ),
       ),
     );
   }
 }
 
-class AlertSnackBarSecondWidget extends StatefulWidget implements SnackBarAction {
+class AlertSnackBarSecondWidget extends StatefulWidget
+    implements SnackBarAction {
   const AlertSnackBarSecondWidget({
     Key? key,
     this.textColor,
     this.disabledTextColor,
     required this.label,
     required this.onPressed,
-    this.primaryColor = Colors.black, this.titleTextStyle,
+    this.primaryColor = Colors.black,
+    this.titleTextStyle,
   }) : super(key: key);
 
   @override
@@ -799,27 +864,30 @@ class AlertSnackBarSecondWidget extends StatefulWidget implements SnackBarAction
   final Color primaryColor;
   final TextStyle? titleTextStyle;
 
-
   @override
-  State<AlertSnackBarSecondWidget> createState() => _AlertSnackBarSecondWidgetState();
+  State<AlertSnackBarSecondWidget> createState() =>
+      _AlertSnackBarSecondWidgetState();
 }
 
-class _AlertSnackBarSecondWidgetState extends State<AlertSnackBarSecondWidget> with SingleTickerProviderStateMixin {
+class _AlertSnackBarSecondWidgetState extends State<AlertSnackBarSecondWidget>
+    with SingleTickerProviderStateMixin {
   var fadeAnimationStart = false;
 
   late AnimationController _animationController;
   late Animation<double> _animation;
 
   @override
-  void initState()  {
-    _animationController = AnimationController(vsync: this, duration: const Duration(milliseconds: 700));
-    _animation = Tween<double>(begin: 0, end: 1).animate(CurvedAnimation(parent: _animationController, curve: Curves.easeInOutCirc));
+  void initState() {
+    _animationController = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 700));
+    _animation = Tween<double>(begin: 0, end: 1).animate(CurvedAnimation(
+        parent: _animationController, curve: Curves.easeInOutCirc));
     _handleAnimation();
     super.initState();
   }
 
   void _handleAnimation() {
-    Future.delayed(const Duration(milliseconds: 300), (){
+    Future.delayed(const Duration(milliseconds: 300), () {
       _showIcon();
       setState(() {
         fadeAnimationStart = true;
@@ -858,7 +926,9 @@ class _AlertSnackBarSecondWidgetState extends State<AlertSnackBarSecondWidget> w
                         child: AnimatedContainer(
                           duration: const Duration(milliseconds: 400),
                           child: CustomAnimatedIcons(
-                            color: fadeAnimationStart ? Colors.white : widget.primaryColor,
+                            color: fadeAnimationStart
+                                ? Colors.white
+                                : widget.primaryColor,
                             progress: _animation,
                             size: 40,
                             iconType: IconType.alert,
@@ -872,7 +942,8 @@ class _AlertSnackBarSecondWidgetState extends State<AlertSnackBarSecondWidget> w
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     AnimatedContainer(
-                      margin: EdgeInsets.only(left: fadeAnimationStart ? 0 : 10),
+                      margin:
+                          EdgeInsets.only(left: fadeAnimationStart ? 0 : 10),
                       duration: const Duration(milliseconds: 400),
                       child: AnimatedOpacity(
                         duration: const Duration(milliseconds: 400),
@@ -881,12 +952,12 @@ class _AlertSnackBarSecondWidgetState extends State<AlertSnackBarSecondWidget> w
                             overflow: TextOverflow.visible,
                             maxLines: 1,
                             style: widget.titleTextStyle ??
-                                const TextStyle(fontSize: 16, color: Colors.white)),
+                                const TextStyle(
+                                    fontSize: 16, color: Colors.white)),
                       ),
                     ),
                   ],
                 ),
-
               ],
             ),
           ),
@@ -895,4 +966,3 @@ class _AlertSnackBarSecondWidgetState extends State<AlertSnackBarSecondWidget> w
     );
   }
 }
-

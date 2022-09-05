@@ -30,7 +30,6 @@ class EllipsisText extends StatefulWidget {
 }
 
 class _EllipsisTextState extends State<EllipsisText> {
-
   late bool isSmallContent = widget.startScaleIsSmall ?? true;
 
   @override
@@ -65,43 +64,49 @@ class _EllipsisTextState extends State<EllipsisText> {
     ).height;
   }
 
-
-
   @override
   Widget build(BuildContext context) {
-
     TextPainter textPainter = TextPainter(
       text: TextSpan(text: widget.text, style: widget.style),
       maxLines: widget.maxLines,
       textDirection: widget.textDirection ?? TextDirection.ltr,
     )..layout(minWidth: widget.minWidth, maxWidth: widget.maxWidth);
 
-    return widget.isShowMore ?? true ? InkWell(
-      splashFactory: widget.splashFactory,
-      onTap: () {
-        setState(() {
-          isSmallContent = !isSmallContent;
-        });
-      },
-      child: AnimatedCrossFade(
-        duration: const Duration(milliseconds: 300),
-        crossFadeState: isSmallContent ? CrossFadeState.showFirst : CrossFadeState.showSecond,
-        firstChild: CustomPaint(
-            size: Size(textPainter.size.width, getTextLineHeight(style: widget.style ?? const TextStyle(color: Colors.black), lines: widget.maxLines)) ,
+    return widget.isShowMore ?? true
+        ? InkWell(
+            splashFactory: widget.splashFactory,
+            onTap: () {
+              setState(() {
+                isSmallContent = !isSmallContent;
+              });
+            },
+            child: AnimatedCrossFade(
+              duration: const Duration(milliseconds: 300),
+              crossFadeState: isSmallContent
+                  ? CrossFadeState.showFirst
+                  : CrossFadeState.showSecond,
+              firstChild: CustomPaint(
+                  size: Size(
+                      textPainter.size.width,
+                      getTextLineHeight(
+                          style: widget.style ??
+                              const TextStyle(color: Colors.black),
+                          lines: widget.maxLines)),
+                  painter: EllipsisTextPainter(
+                    text: TextSpan(text: widget.text, style: widget.style),
+                    ellipsis: widget.ellipsis,
+                    maxLines: widget.maxLines,
+                  )),
+              secondChild: Text(widget.text, style: widget.style),
+            ),
+          )
+        : CustomPaint(
+            size: textPainter.size,
             painter: EllipsisTextPainter(
               text: TextSpan(text: widget.text, style: widget.style),
               ellipsis: widget.ellipsis,
               maxLines: widget.maxLines,
-            )),
-        secondChild: Text(widget.text, style: widget.style),
-      ),
-    ) : CustomPaint(
-        size: textPainter.size,
-        painter: EllipsisTextPainter(
-          text: TextSpan(text: widget.text, style: widget.style),
-          ellipsis: widget.ellipsis,
-          maxLines: widget.maxLines,
-        ));
+            ));
   }
 }
 
@@ -121,7 +126,6 @@ class EllipsisTextPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-
     TextPainter painter = TextPainter(
       text: text,
       maxLines: maxLines,

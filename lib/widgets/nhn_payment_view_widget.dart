@@ -1,4 +1,3 @@
-
 /// import 'dart:async';
 /// import 'dart:convert';
 /// import 'dart:developer';
@@ -9,17 +8,14 @@ import 'package:flutter/services.dart';
 // import 'package:url_launcher/url_launcher.dart';
 // import 'package:webview_flutter/webview_flutter.dart';
 
-
-
 /// NHN 사이버 결제 웹뷰 위젯
 /// url에 결제요청 url 연동하면 완료
 
 class PaymentViewWidget extends StatelessWidget {
-  const PaymentViewWidget(
-      {Key? key, required this.url}) : super(key: key);
+  const PaymentViewWidget({Key? key, required this.url}) : super(key: key);
 
   final String url;
-  final MethodChannel _channel = const MethodChannel('payment');
+  // final MethodChannel _channel = const MethodChannel('payment');
 
   ///todo: flutter webView 라이브러리 추가 후 설정
   ///todo: urlLauncher 필요시 추가
@@ -27,7 +23,7 @@ class PaymentViewWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      // child:
+        // child:
         // WebView(
         //   debuggingEnabled: true,
         //   onPageStarted: () {
@@ -59,8 +55,8 @@ class PaymentViewWidget extends StatelessWidget {
         //   initialUrl: Uri.parse(url).toString(),
         //   javascriptMode: JavascriptMode.unrestricted,
         // ),
-      // ),
-    );
+        // ),
+        );
   }
 
   /// IOS 네비게이팅

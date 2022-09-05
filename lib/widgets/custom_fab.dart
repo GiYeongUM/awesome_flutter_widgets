@@ -36,7 +36,8 @@ class CustomFAB extends StatefulWidget {
   State<CustomFAB> createState() => _CustomFABState();
 }
 
-class _CustomFABState extends State<CustomFAB> with SingleTickerProviderStateMixin {
+class _CustomFABState extends State<CustomFAB>
+    with SingleTickerProviderStateMixin {
   int _angle = 90;
   bool _isRotated = true;
   var buttonLength = 1;
@@ -47,15 +48,13 @@ class _CustomFABState extends State<CustomFAB> with SingleTickerProviderStateMix
 
   @override
   void initState() {
-
-    if(widget.secondButtonIcon == null || widget.secondOnClick == null){
+    if (widget.secondButtonIcon == null || widget.secondOnClick == null) {
       buttonLength = 1;
-    } else if(widget.thirdButtonIcon == null || widget.thirdOnClick == null){
+    } else if (widget.thirdButtonIcon == null || widget.thirdOnClick == null) {
       buttonLength = 2;
     } else {
       buttonLength = 3;
     }
-
 
     _controller = AnimationController(
       vsync: this,
@@ -115,7 +114,7 @@ class _CustomFABState extends State<CustomFAB> with SingleTickerProviderStateMix
                   child: Stack(
                     children: [
                       Material(
-                        elevation : 10,
+                        elevation: 10,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30.0),
                         ),
@@ -123,7 +122,10 @@ class _CustomFABState extends State<CustomFAB> with SingleTickerProviderStateMix
                           width: 50.0,
                           height: 50.0,
                           decoration: BoxDecoration(
-                            color: (Theme.of(context).brightness == Brightness.dark ? Colors.white : widget.firstButtonColor ?? Colors.white),
+                            color:
+                                (Theme.of(context).brightness == Brightness.dark
+                                    ? Colors.white
+                                    : widget.firstButtonColor ?? Colors.white),
                             shape: BoxShape.circle,
                           ),
                         ),
@@ -134,8 +136,10 @@ class _CustomFABState extends State<CustomFAB> with SingleTickerProviderStateMix
                           child: Center(
                             child: Icon(
                               widget.firstButtonIcon,
-                              color: (Theme.of(context).brightness == Brightness.dark ? Colors.white : widget.firstIconColor ?? Colors.black),
-
+                              color: (Theme.of(context).brightness ==
+                                      Brightness.dark
+                                  ? Colors.white
+                                  : widget.firstIconColor ?? Colors.black),
                             ),
                           )),
                     ],
@@ -144,99 +148,115 @@ class _CustomFABState extends State<CustomFAB> with SingleTickerProviderStateMix
               ),
             ],
           )),
-      buttonLength > 1 ? Positioned(
-          bottom: 145.0,
-          right: 10.0,
-          child: Row(
-            children: <Widget>[
-              ScaleTransition(
-                scale: _animation2!,
-                alignment: FractionalOffset.center,
-                child: GestureDetector(
-                  onTap: () {
-                    if (_angle == 45.0) {
-                      widget.secondOnClick!();
-                      _rotate();
-                    }
-                  },
-                  child: Stack(
-                    children: [
-                      Material(
-                        elevation : 10,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30.0),
-                        ),
-                        child: Container(
-                          width: 50.0,
-                          height: 50.0,
-                          decoration: BoxDecoration(
-                              color: (Theme.of(context).brightness == Brightness.dark ? Colors.white :  widget.secondButtonColor ?? Colors.white),
-                              shape: BoxShape.circle
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                          width: 50.0,
-                          height: 50.0,
-                          child: Center(
-                            child: Icon(
-                              widget.secondButtonIcon,
-                              color: (Theme.of(context).brightness == Brightness.dark ? Colors.white : widget.secondIconColor ?? Colors.black),
-                              // color: Colors.white,
+      buttonLength > 1
+          ? Positioned(
+              bottom: 145.0,
+              right: 10.0,
+              child: Row(
+                children: <Widget>[
+                  ScaleTransition(
+                    scale: _animation2!,
+                    alignment: FractionalOffset.center,
+                    child: GestureDetector(
+                      onTap: () {
+                        if (_angle == 45.0) {
+                          widget.secondOnClick!();
+                          _rotate();
+                        }
+                      },
+                      child: Stack(
+                        children: [
+                          Material(
+                            elevation: 10,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30.0),
                             ),
-                          )),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          )) : Container(),
-      buttonLength > 2 ? Positioned(
-          bottom: 210.0,
-          right: 10.0,
-          child: Row(
-            children: <Widget>[
-              ScaleTransition(
-                scale: _animation3!,
-                alignment: FractionalOffset.center,
-                child: GestureDetector(
-                  onTap: () {
-                    if (_angle == 45.0) {
-                      widget.thirdOnClick!();
-                      _rotate();
-                    }
-                  },
-                  child: Stack(
-                    children: [
-                      Material(
-                        elevation : 10,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30.0),
-                        ),
-                        child: Container(
-                          width: 50.0,
-                          height: 50.0,
-                          decoration: BoxDecoration(
-                              color: (Theme.of(context).brightness == Brightness.dark ? Colors.white :  widget.thirdButtonColor ?? Colors.white),
-                              shape: BoxShape.circle
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                          width: 50.0,
-                          height: 50.0,
-                          child: Center(
-                            child: Icon(
-                              widget.thirdButtonIcon,
-                              color: (Theme.of(context).brightness == Brightness.dark ? Colors.white : widget.thirdIconColor ?? Colors.black),
+                            child: Container(
+                              width: 50.0,
+                              height: 50.0,
+                              decoration: BoxDecoration(
+                                  color: (Theme.of(context).brightness ==
+                                          Brightness.dark
+                                      ? Colors.white
+                                      : widget.secondButtonColor ??
+                                          Colors.white),
+                                  shape: BoxShape.circle),
                             ),
-                          )),
-                    ],
+                          ),
+                          SizedBox(
+                              width: 50.0,
+                              height: 50.0,
+                              child: Center(
+                                child: Icon(
+                                  widget.secondButtonIcon,
+                                  color: (Theme.of(context).brightness ==
+                                          Brightness.dark
+                                      ? Colors.white
+                                      : widget.secondIconColor ?? Colors.black),
+                                  // color: Colors.white,
+                                ),
+                              )),
+                        ],
+                      ),
+                    ),
                   ),
-                ),
-              ),
-            ],
-          )) : Container(),
+                ],
+              ))
+          : Container(),
+      buttonLength > 2
+          ? Positioned(
+              bottom: 210.0,
+              right: 10.0,
+              child: Row(
+                children: <Widget>[
+                  ScaleTransition(
+                    scale: _animation3!,
+                    alignment: FractionalOffset.center,
+                    child: GestureDetector(
+                      onTap: () {
+                        if (_angle == 45.0) {
+                          widget.thirdOnClick!();
+                          _rotate();
+                        }
+                      },
+                      child: Stack(
+                        children: [
+                          Material(
+                            elevation: 10,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30.0),
+                            ),
+                            child: Container(
+                              width: 50.0,
+                              height: 50.0,
+                              decoration: BoxDecoration(
+                                  color: (Theme.of(context).brightness ==
+                                          Brightness.dark
+                                      ? Colors.white
+                                      : widget.thirdButtonColor ??
+                                          Colors.white),
+                                  shape: BoxShape.circle),
+                            ),
+                          ),
+                          SizedBox(
+                              width: 50.0,
+                              height: 50.0,
+                              child: Center(
+                                child: Icon(
+                                  widget.thirdButtonIcon,
+                                  color: (Theme.of(context).brightness ==
+                                          Brightness.dark
+                                      ? Colors.white
+                                      : widget.thirdIconColor ?? Colors.black),
+                                ),
+                              )),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ))
+          : Container(),
       Positioned(
         bottom: 10.0,
         right: 10.0,
@@ -245,7 +265,7 @@ class _CustomFABState extends State<CustomFAB> with SingleTickerProviderStateMix
           child: Stack(
             children: [
               Material(
-                elevation : 10,
+                elevation: 10,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30.0),
                 ),
@@ -253,9 +273,10 @@ class _CustomFABState extends State<CustomFAB> with SingleTickerProviderStateMix
                   width: 50.0,
                   height: 50.0,
                   decoration: BoxDecoration(
-                      color: (Theme.of(context).brightness == Brightness.dark ? Colors.white :  widget.primaryColor ?? Colors.white),
-                      shape: BoxShape.circle
-                  ),
+                      color: (Theme.of(context).brightness == Brightness.dark
+                          ? Colors.white
+                          : widget.primaryColor ?? Colors.white),
+                      shape: BoxShape.circle),
                 ),
               ),
               SizedBox(
@@ -265,7 +286,9 @@ class _CustomFABState extends State<CustomFAB> with SingleTickerProviderStateMix
                     child: AnimatedIcon(
                       icon: AnimatedIcons.menu_close,
                       progress: _controller!,
-                      color: (Theme.of(context).brightness == Brightness.dark ?  widget.primaryColor ?? Colors.black : Colors.black),
+                      color: (Theme.of(context).brightness == Brightness.dark
+                          ? widget.primaryColor ?? Colors.black
+                          : Colors.black),
                     ),
                   )),
             ],
@@ -275,4 +298,3 @@ class _CustomFABState extends State<CustomFAB> with SingleTickerProviderStateMix
     ]);
   }
 }
-
