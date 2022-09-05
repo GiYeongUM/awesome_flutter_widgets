@@ -6,6 +6,9 @@ enum IconType {
   check,
   fail,
   alert,
+  trendingUp,
+  trendingDown,
+  search,
 }
 
 class CustomAnimatedIcons extends StatefulWidget {
@@ -63,6 +66,30 @@ class CustomAnimatedIconsState extends State<CustomAnimatedIcons>
               width: widget.size,
               height: widget.size,
             ));
+      case IconType.trendingUp:
+        return CustomPaint(
+            foregroundPainter: AnimateTrendingUpPathPainter(widget.progress,
+                widget.color ?? theme.primaryColor, widget.strokeWidth),
+            child: SizedBox(
+              width: widget.size,
+              height: widget.size,
+            ));
+      case IconType.trendingDown:
+        return CustomPaint(
+            foregroundPainter: AnimateTrendingDownPathPainter(widget.progress,
+                widget.color ?? theme.primaryColor, widget.strokeWidth),
+            child: SizedBox(
+              width: widget.size,
+              height: widget.size,
+            ));
+      case IconType.search:
+        return CustomPaint(
+          foregroundPainter: AnimateSearchPathPainter(widget.progress,
+              widget.color ?? theme.primaryColor, widget.strokeWidth),
+          child: SizedBox(
+            width: widget.size,
+            height: widget.size,
+          ));
     }
   }
 }
@@ -230,12 +257,12 @@ class AnimatedAlertPathPainter extends CustomPainter {
     return Path()
       ..addOval(Rect.fromCircle(
         center: Offset(0.5 * size.width, 0.5 * size.height),
-        radius: (size.width + size.height) / 6,
+        radius: (size.width + size.height) / 7.5,
       ))
-      ..moveTo(0.5 * size.width, 0.32 * size.height)
-      ..lineTo(0.5 * size.width, 0.57 * size.height)
-      ..moveTo(0.5 * size.width, 0.64 * size.height)
-      ..lineTo(0.5 * size.width, 0.69 * size.height);
+      ..moveTo(0.5 * size.width, 0.34 * size.height)
+      ..lineTo(0.5 * size.width, 0.55 * size.height)
+      ..moveTo(0.5 * size.width, 0.61 * size.height)
+      ..lineTo(0.5 * size.width, 0.66 * size.height);
   }
 
   Path createAnimatedPath(Path originalPath, double animationPercent) {
@@ -288,6 +315,247 @@ class AnimatedAlertPathPainter extends CustomPainter {
     paint.color = _color;
     paint.style = PaintingStyle.stroke;
     paint.strokeWidth = strokeWidth ?? size.width * 0.06;
+
+    canvas.drawPath(path, paint);
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) {
+    return true;
+  }
+}
+
+class AnimateTrendingUpPathPainter extends CustomPainter {
+  final Animation<double> _animation;
+  final Color _color;
+  final double? strokeWidth;
+
+  AnimateTrendingUpPathPainter(this._animation, this._color, this.strokeWidth)
+      : super(repaint: _animation);
+
+  Path _createAnyPath(Size size) {
+    return Path()
+
+      ..moveTo(0.28 * size.width, 0.62 * size.height)
+      ..lineTo(0.43 * size.width, 0.47 * size.height)
+      ..lineTo(0.53 * size.width, 0.57 * size.height)
+      ..lineTo(0.72 * size.width, 0.38 * size.height)
+      ..moveTo(0.745 * size.width, 0.38 * size.height)
+      ..lineTo(0.60 * size.width, 0.38 * size.height)
+      ..moveTo(0.72 * size.width, 0.38 * size.height)
+      ..lineTo(0.72 * size.width, 0.50 * size.height);
+  }
+
+  Path createAnimatedPath(Path originalPath, double animationPercent) {
+    final totalLength = originalPath
+        .computeMetrics()
+        .fold(0.0, (double prev, PathMetric metric) => prev + metric.length);
+
+    final currentLength = totalLength * animationPercent;
+
+    return extractPathUntilLength(originalPath, currentLength);
+  }
+
+  Path extractPathUntilLength(Path originalPath, double length) {
+    var currentLength = 0.0;
+
+    final path = Path();
+
+    var metricsIterator = originalPath.computeMetrics().iterator;
+
+    while (metricsIterator.moveNext()) {
+      var metric = metricsIterator.current;
+
+      var nextLength = currentLength + metric.length;
+
+      final isLastSegment = nextLength > length;
+      if (isLastSegment) {
+        final remainingLength = length - currentLength;
+        final pathSegment = metric.extractPath(0.0, remainingLength);
+
+        path.addPath(pathSegment, Offset.zero);
+        break;
+      } else {
+        final pathSegment = metric.extractPath(0.0, metric.length);
+        path.addPath(pathSegment, Offset.zero);
+      }
+
+      currentLength = nextLength;
+    }
+
+    return path;
+  }
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final animationPercent = _animation.value;
+
+    final path = createAnimatedPath(_createAnyPath(size), animationPercent);
+
+    final Paint paint = Paint();
+    paint.color = _color;
+    paint.style = PaintingStyle.stroke;
+    paint.strokeWidth = strokeWidth ?? size.width * 0.05;
+
+    canvas.drawPath(path, paint);
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) {
+    return true;
+  }
+}
+
+class AnimateTrendingDownPathPainter extends CustomPainter {
+  final Animation<double> _animation;
+  final Color _color;
+  final double? strokeWidth;
+
+  AnimateTrendingDownPathPainter(this._animation, this._color, this.strokeWidth)
+      : super(repaint: _animation);
+
+  Path _createAnyPath(Size size) {
+    return Path()
+      ..moveTo(0.25 * size.width, 0.35 * size.height)
+      ..lineTo(0.415 * size.width, 0.525 * size.height)
+      ..lineTo(0.515 * size.width, 0.405 * size.height)
+      ..lineTo(0.700 * size.width, 0.600 * size.height)
+      ..moveTo(0.735 * size.width, 0.615 * size.height)
+      ..lineTo(0.585 * size.width, 0.615 * size.height)
+      ..moveTo(0.715 * size.width, 0.635 * size.height)
+      ..lineTo(0.715 * size.width, 0.475 * size.height);
+
+  }
+
+  Path createAnimatedPath(Path originalPath, double animationPercent) {
+    final totalLength = originalPath
+        .computeMetrics()
+        .fold(0.0, (double prev, PathMetric metric) => prev + metric.length);
+
+    final currentLength = totalLength * animationPercent;
+
+    return extractPathUntilLength(originalPath, currentLength);
+  }
+
+  Path extractPathUntilLength(Path originalPath, double length) {
+    var currentLength = 0.0;
+
+    final path = Path();
+
+    var metricsIterator = originalPath.computeMetrics().iterator;
+
+    while (metricsIterator.moveNext()) {
+      var metric = metricsIterator.current;
+
+      var nextLength = currentLength + metric.length;
+
+      final isLastSegment = nextLength > length;
+      if (isLastSegment) {
+        final remainingLength = length - currentLength;
+        final pathSegment = metric.extractPath(0.0, remainingLength);
+
+        path.addPath(pathSegment, Offset.zero);
+        break;
+      } else {
+        final pathSegment = metric.extractPath(0.0, metric.length);
+        path.addPath(pathSegment, Offset.zero);
+      }
+
+      currentLength = nextLength;
+    }
+
+    return path;
+  }
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final animationPercent = _animation.value;
+
+    final path = createAnimatedPath(_createAnyPath(size), animationPercent);
+
+    final Paint paint = Paint();
+    paint.color = _color;
+    paint.style = PaintingStyle.stroke;
+    paint.strokeWidth = strokeWidth ?? size.width * 0.05;
+
+    canvas.drawPath(path, paint);
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) {
+    return true;
+  }
+}
+
+
+class AnimateSearchPathPainter extends CustomPainter {
+  final Animation<double> _animation;
+  final Color _color;
+  final double? strokeWidth;
+
+  AnimateSearchPathPainter(this._animation, this._color, this.strokeWidth)
+      : super(repaint: _animation);
+
+  Path _createAnyPath(Size size) {
+    return Path()
+      ..addOval(Rect.fromCircle(
+        center: Offset(0.46 * size.width, 0.51 * size.height),
+        radius: (size.width + size.height) / 7.5,
+      ))
+      ..moveTo(0.56 * size.width, 0.61 * size.height)
+      ..lineTo(0.66 * size.width, 0.71 * size.height);
+  }
+
+  Path createAnimatedPath(Path originalPath, double animationPercent) {
+    final totalLength = originalPath
+        .computeMetrics()
+        .fold(0.0, (double prev, PathMetric metric) => prev + metric.length);
+
+    final currentLength = totalLength * animationPercent;
+
+    return extractPathUntilLength(originalPath, currentLength);
+  }
+
+  Path extractPathUntilLength(Path originalPath, double length) {
+    var currentLength = 0.0;
+
+    final path = Path();
+
+    var metricsIterator = originalPath.computeMetrics().iterator;
+
+    while (metricsIterator.moveNext()) {
+      var metric = metricsIterator.current;
+
+      var nextLength = currentLength + metric.length;
+
+      final isLastSegment = nextLength > length;
+      if (isLastSegment) {
+        final remainingLength = length - currentLength;
+        final pathSegment = metric.extractPath(0.0, remainingLength);
+
+        path.addPath(pathSegment, Offset.zero);
+        break;
+      } else {
+        final pathSegment = metric.extractPath(0.0, metric.length);
+        path.addPath(pathSegment, Offset.zero);
+      }
+
+      currentLength = nextLength;
+    }
+
+    return path;
+  }
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final animationPercent = _animation.value;
+
+    final path = createAnimatedPath(_createAnyPath(size), animationPercent);
+
+    final Paint paint = Paint();
+    paint.color = _color;
+    paint.style = PaintingStyle.stroke;
+    paint.strokeWidth = strokeWidth ?? size.width * 0.05;
 
     canvas.drawPath(path, paint);
   }
