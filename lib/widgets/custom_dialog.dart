@@ -20,7 +20,7 @@ class CustomDialog {
     TextStyle? titleStyle,
     TextStyle? contentStyle,
     Color? defaultButtonTextColor,
-  }){
+  }) {
     return showDialog(
       context: context,
       barrierDismissible: false, // user must tap button!
@@ -43,10 +43,8 @@ class CustomDialog {
         );
       },
     );
-
   }
 }
-
 
 class CustomDialogWidget extends StatefulWidget {
   final String title;
@@ -88,16 +86,17 @@ class CustomDialogWidget extends StatefulWidget {
   State<CustomDialogWidget> createState() => _CustomDialogWidgetState();
 }
 
-class _CustomDialogWidgetState extends State<CustomDialogWidget> with SingleTickerProviderStateMixin {
-
+class _CustomDialogWidgetState extends State<CustomDialogWidget>
+    with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation<double> _animation;
 
-
   @override
-  void initState()  {
-    _animationController = AnimationController(vsync: this, duration: const Duration(milliseconds: 700));
-    _animation = Tween<double>(begin: 0, end: 1).animate(CurvedAnimation(parent: _animationController, curve: Curves.easeInOutCirc));
+  void initState() {
+    _animationController = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 700));
+    _animation = Tween<double>(begin: 0, end: 1).animate(CurvedAnimation(
+        parent: _animationController, curve: Curves.easeInOutCirc));
     _showCheck();
 
     super.initState();
@@ -113,7 +112,8 @@ class _CustomDialogWidgetState extends State<CustomDialogWidget> with SingleTick
       onWillPop: () async => widget.canGoBack ?? true,
       child: Dialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
-        insetPadding: EdgeInsets.symmetric(horizontal: widget.insetPadding ?? 56),
+        insetPadding:
+            EdgeInsets.symmetric(horizontal: widget.insetPadding ?? 56),
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(widget.radius ?? 8.0),
@@ -125,17 +125,21 @@ class _CustomDialogWidgetState extends State<CustomDialogWidget> with SingleTick
               SizedBox(
                 height: widget.topToTitleGap ?? 16,
               ),
-              widget.iconTitle ?? false ? CustomAnimatedIcons(
-                color: widget.primaryColor ?? Colors.black,
-                progress: _animation,
-                size: 36,
-                iconType: IconType.alert,
-              ) : Text(
-                widget.title,
-                style: widget.titleStyle,
-              ),
+              widget.iconTitle ?? false
+                  ? CustomAnimatedIcons(
+                      color: widget.primaryColor ?? Colors.black,
+                      progress: _animation,
+                      size: 36,
+                      iconType: IconType.alert,
+                    )
+                  : Text(
+                      widget.title,
+                      style: widget.titleStyle,
+                    ),
               SizedBox(
-                height: widget.iconTitle ?? false ? widget.titleToContentGap ?? 16 : widget.titleToContentGap ?? 32,
+                height: widget.iconTitle ?? false
+                    ? widget.titleToContentGap ?? 16
+                    : widget.titleToContentGap ?? 32,
               ),
               widget.content == null
                   ? Container()
@@ -145,7 +149,9 @@ class _CustomDialogWidgetState extends State<CustomDialogWidget> with SingleTick
                       style: widget.contentStyle,
                     ),
               SizedBox(
-                height: widget.iconTitle ?? false ? widget.contentToButtonGap ?? 24 : widget.contentToButtonGap ?? 40,
+                height: widget.iconTitle ?? false
+                    ? widget.contentToButtonGap ?? 24
+                    : widget.contentToButtonGap ?? 40,
               ),
               widget.widgets ??
                   GestureDetector(
@@ -165,7 +171,8 @@ class _CustomDialogWidgetState extends State<CustomDialogWidget> with SingleTick
                         child: Text(
                           "OK",
                           style: TextStyle(
-                              color: widget.defaultButtonTextColor ?? Colors.white),
+                              color: widget.defaultButtonTextColor ??
+                                  Colors.white),
                         ),
                       ),
                     ),

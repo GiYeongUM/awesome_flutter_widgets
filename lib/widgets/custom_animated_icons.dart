@@ -8,7 +8,6 @@ enum IconType {
   alert,
 }
 
-
 class CustomAnimatedIcons extends StatefulWidget {
   final Animation<double> progress;
   final double size;
@@ -16,19 +15,21 @@ class CustomAnimatedIcons extends StatefulWidget {
   final double? strokeWidth;
   final IconType iconType;
 
-  const CustomAnimatedIcons({
-    Key? key,
-    required this.progress,
-    required this.size,
-    this.color,
-    this.strokeWidth, required this.iconType}) : super(key: key);
+  const CustomAnimatedIcons(
+      {Key? key,
+      required this.progress,
+      required this.size,
+      this.color,
+      this.strokeWidth,
+      required this.iconType})
+      : super(key: key);
 
   @override
   State<StatefulWidget> createState() => CustomAnimatedIconsState();
 }
 
-class CustomAnimatedIconsState extends State<CustomAnimatedIcons> with SingleTickerProviderStateMixin {
-
+class CustomAnimatedIconsState extends State<CustomAnimatedIcons>
+    with SingleTickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
@@ -37,33 +38,32 @@ class CustomAnimatedIconsState extends State<CustomAnimatedIcons> with SingleTic
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
-    switch(widget.iconType) {
+    switch (widget.iconType) {
       case IconType.check:
         return CustomPaint(
-            foregroundPainter: AnimatedCheckPathPainter(widget.progress, widget.color ?? theme.primaryColor, widget.strokeWidth),
+            foregroundPainter: AnimatedCheckPathPainter(widget.progress,
+                widget.color ?? theme.primaryColor, widget.strokeWidth),
             child: SizedBox(
               width: widget.size,
               height: widget.size,
-            )
-        );
+            ));
       case IconType.fail:
         return CustomPaint(
-            foregroundPainter: AnimatedClosePathPainter(widget.progress, widget.color ?? theme.primaryColor, widget.strokeWidth),
+            foregroundPainter: AnimatedClosePathPainter(widget.progress,
+                widget.color ?? theme.primaryColor, widget.strokeWidth),
             child: SizedBox(
               width: widget.size,
               height: widget.size,
-            )
-        );
+            ));
       case IconType.alert:
         return CustomPaint(
-            foregroundPainter: AnimatedAlertPathPainter(widget.progress, widget.color ?? theme.primaryColor, widget.strokeWidth),
+            foregroundPainter: AnimatedAlertPathPainter(widget.progress,
+                widget.color ?? theme.primaryColor, widget.strokeWidth),
             child: SizedBox(
               width: widget.size,
               height: widget.size,
-            )
-        );
+            ));
     }
-
   }
 }
 
@@ -72,7 +72,8 @@ class AnimatedCheckPathPainter extends CustomPainter {
   final Color _color;
   final double? strokeWidth;
 
-  AnimatedCheckPathPainter(this._animation, this._color, this.strokeWidth) : super(repaint: _animation);
+  AnimatedCheckPathPainter(this._animation, this._color, this.strokeWidth)
+      : super(repaint: _animation);
 
   Path _createAnyPath(Size size) {
     return Path()
@@ -111,7 +112,6 @@ class AnimatedCheckPathPainter extends CustomPainter {
         path.addPath(pathSegment, Offset.zero);
         break;
       } else {
-
         final pathSegment = metric.extractPath(0.0, metric.length);
         path.addPath(pathSegment, Offset.zero);
       }
@@ -147,13 +147,14 @@ class AnimatedClosePathPainter extends CustomPainter {
   final Color _color;
   final double? strokeWidth;
 
-  AnimatedClosePathPainter(this._animation, this._color, this.strokeWidth) : super(repaint: _animation);
+  AnimatedClosePathPainter(this._animation, this._color, this.strokeWidth)
+      : super(repaint: _animation);
 
   Path _createAnyPath(Size size) {
     return Path()
       ..moveTo(0.7 * size.width, 0.3 * size.height)
       ..lineTo(0.3 * size.width, 0.7 * size.height)
-      ..moveTo(0.3* size.width, 0.3 * size.height)
+      ..moveTo(0.3 * size.width, 0.3 * size.height)
       ..lineTo(0.7 * size.width, 0.7 * size.height);
   }
 
@@ -187,7 +188,6 @@ class AnimatedClosePathPainter extends CustomPainter {
         path.addPath(pathSegment, Offset.zero);
         break;
       } else {
-
         final pathSegment = metric.extractPath(0.0, metric.length);
         path.addPath(pathSegment, Offset.zero);
       }
@@ -223,7 +223,8 @@ class AnimatedAlertPathPainter extends CustomPainter {
   final Color _color;
   final double? strokeWidth;
 
-  AnimatedAlertPathPainter(this._animation, this._color, this.strokeWidth) : super(repaint: _animation);
+  AnimatedAlertPathPainter(this._animation, this._color, this.strokeWidth)
+      : super(repaint: _animation);
 
   Path _createAnyPath(Size size) {
     return Path()
@@ -231,10 +232,10 @@ class AnimatedAlertPathPainter extends CustomPainter {
         center: Offset(0.5 * size.width, 0.5 * size.height),
         radius: (size.width + size.height) / 6,
       ))
-      ..moveTo(0.5* size.width, 0.32 * size.height)
-      ..lineTo(0.5* size.width, 0.57 * size.height)
-      ..moveTo(0.5* size.width, 0.64 * size.height)
-      ..lineTo(0.5* size.width, 0.69 * size.height);
+      ..moveTo(0.5 * size.width, 0.32 * size.height)
+      ..lineTo(0.5 * size.width, 0.57 * size.height)
+      ..moveTo(0.5 * size.width, 0.64 * size.height)
+      ..lineTo(0.5 * size.width, 0.69 * size.height);
   }
 
   Path createAnimatedPath(Path originalPath, double animationPercent) {
@@ -267,7 +268,6 @@ class AnimatedAlertPathPainter extends CustomPainter {
         path.addPath(pathSegment, Offset.zero);
         break;
       } else {
-
         final pathSegment = metric.extractPath(0.0, metric.length);
         path.addPath(pathSegment, Offset.zero);
       }

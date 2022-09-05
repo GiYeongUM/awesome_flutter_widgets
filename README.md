@@ -23,7 +23,7 @@ dependencies:
 
 ## 💪 Widgets
 
-### 1. ellipsis_text
+## 1. ellipsis_text
 
 ellipsis text is a widget that allows you to **customize text in ellipsis** when text exceeds maxLines.
 
@@ -45,7 +45,7 @@ EllipsisText(
 ```
 
 
-### 2. custom_dialog 
+## 2. custom_dialog 
 
 This widget is a simple dialog that deviates from the complex dialog of the flutter.
 You can also add an **animation icon** instead of a title.
@@ -86,7 +86,7 @@ static dialog({
   });
 ```
 
-### 3. custom_fab 
+## 3. custom_fab 
 
 Simple animated FAB! (maximum 3)
 
@@ -110,7 +110,7 @@ floatingActionButton: CustomFAB(
 ```
 
 
-### 4. custom_animated_icons 
+## 4. custom_animated_icons 
 
 Simple animated Icons! (It will be added frequently)
 
@@ -170,7 +170,7 @@ _showIcon()
 /// _animationController.reverse();
 ```
 
-### 5. animated_snack_bar 
+## 5. animated_snack_bar 
 
 This widget is a snack bar with a customized animation.
 There are two animations for each state.
@@ -194,6 +194,6 @@ ElevatedButton(
 ),
 ```
 
-### 6. utils 
+## 6. utils 
 
 
