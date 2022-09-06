@@ -1,5 +1,5 @@
-import 'package:awesome_flutter_widgets/widgets/custom_animated_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:icon_animated/animated_icons.dart';
 
 enum SnackBarType {
   saveFirstAnimation,
@@ -225,7 +225,7 @@ class _SaveSnackBarFirstWidgetState extends State<SaveSnackBarFirstWidget>
                     height: 50,
                     width: 40,
                     child: Center(
-                        child: CustomAnimatedIcons(
+                        child: IconAnimated(
                       color: widget.primaryColor,
                       progress: _animation,
                       size: 40,
@@ -244,7 +244,7 @@ class _SaveSnackBarFirstWidgetState extends State<SaveSnackBarFirstWidget>
                           width: 40,
                           child: AnimatedContainer(
                             duration: const Duration(milliseconds: 400),
-                            child: CustomAnimatedIcons(
+                            child: IconAnimated(
                               color: fadeAnimationStart
                                   ? Colors.white
                                   : widget.primaryColor,
@@ -370,7 +370,7 @@ class _SaveSnackBarSecondWidgetState extends State<SaveSnackBarSecondWidget>
                         backgroundColor: Colors.white.withOpacity(0),
                         child: AnimatedContainer(
                           duration: const Duration(milliseconds: 400),
-                          child: CustomAnimatedIcons(
+                          child: IconAnimated(
                             color: fadeAnimationStart
                                 ? Colors.white
                                 : widget.primaryColor,
@@ -502,7 +502,7 @@ class _FailSnackBarFirstWidgetState extends State<FailSnackBarFirstWidget>
                     height: 50,
                     width: 40,
                     child: Center(
-                        child: CustomAnimatedIcons(
+                        child: IconAnimated(
                       color: widget.primaryColor,
                       progress: _animation,
                       size: 40,
@@ -521,7 +521,7 @@ class _FailSnackBarFirstWidgetState extends State<FailSnackBarFirstWidget>
                           width: 40,
                           child: AnimatedContainer(
                             duration: const Duration(milliseconds: 400),
-                            child: CustomAnimatedIcons(
+                            child: IconAnimated(
                               color: fadeAnimationStart
                                   ? Colors.white
                                   : widget.primaryColor,
@@ -647,7 +647,7 @@ class _FailSnackBarSecondWidgetState extends State<FailSnackBarSecondWidget>
                         backgroundColor: Colors.white.withOpacity(0),
                         child: AnimatedContainer(
                           duration: const Duration(milliseconds: 400),
-                          child: CustomAnimatedIcons(
+                          child: IconAnimated(
                             color: fadeAnimationStart
                                 ? Colors.white
                                 : widget.primaryColor,
@@ -780,7 +780,7 @@ class _AlertSnackBarFirstWidgetState extends State<AlertSnackBarFirstWidget>
                     height: 50,
                     width: 40,
                     child: Center(
-                        child: CustomAnimatedIcons(
+                        child: IconAnimated(
                       color: widget.primaryColor,
                       progress: _animation,
                       size: 40,
@@ -799,7 +799,7 @@ class _AlertSnackBarFirstWidgetState extends State<AlertSnackBarFirstWidget>
                           width: 40,
                           child: AnimatedContainer(
                             duration: const Duration(milliseconds: 400),
-                            child: CustomAnimatedIcons(
+                            child: IconAnimated(
                               color: fadeAnimationStart
                                   ? Colors.white
                                   : widget.primaryColor,
@@ -925,7 +925,7 @@ class _AlertSnackBarSecondWidgetState extends State<AlertSnackBarSecondWidget>
                         backgroundColor: Colors.white.withOpacity(0),
                         child: AnimatedContainer(
                           duration: const Duration(milliseconds: 400),
-                          child: CustomAnimatedIcons(
+                          child: IconAnimated(
                             color: fadeAnimationStart
                                 ? Colors.white
                                 : widget.primaryColor,

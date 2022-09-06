@@ -9,7 +9,6 @@ awesome flutter widgets
 - ellipsis_text
 - custom_dialog
 - custom_fab
-- custom_animated_icons
 - animated_snack_bar
 - and some utils (regex, timeAgo..)
 
@@ -109,68 +108,7 @@ floatingActionButton: CustomFAB(
 ),
 ```
 
-
-## 4. custom_animated_icons 
-
-Simple animated Icons! (It will be added frequently)
-
-<img width="308" alt="" src="https://github.com/GiYeongUM/awesome_flutter_widgets/raw/main/images/custom_animated_icons.gif">
-
-1. set animations
-``` dart
-class _FooClassState extends State<FooClass> with SingleTickerProviderStateMixin {
-
-  late AnimationController _animationController;
-  late Animation<double> _animation;
-
-  @override
-  void initState()  {
-    _animationController = AnimationController(vsync: this, duration: const Duration(milliseconds: 700));
-    _animation = Tween<double>(begin: 0, end: 1).animate(CurvedAnimation(parent: _animationController, curve: Curves.easeInOutCirc));
-    super.initState();
-  }
-
-  void _showIcon() {
-    _animationController.forward();
-  }
-  
-  ...
-```
-
-2. add widget
-``` dart
-CustomAnimatedIcons(
-    color: Colors.green,
-    progress: _animation,
-    size: 40,
-    iconType: IconType.check,
-),
-
-CustomAnimatedIcons(
-    color: Colors.red,
-    progress: _animation,
-    size: 40,
-    iconType: IconType.fail,
-),
-
-CustomAnimatedIcons(
-    color: Colors.black,
-    progress: _animation,
-    size: 40,
-    iconType: IconType.alert,
-),
-```
-
-3. trigger widget animation
-``` dart
-_showIcon()
-
-/// If you want to do the reverse
-/// do this
-/// _animationController.reverse();
-```
-
-## 5. animated_snack_bar 
+## 4. animated_snack_bar 
 
 This widget is a snack bar with a customized animation.
 There are two animations for each state.
@@ -194,6 +132,5 @@ ElevatedButton(
 ),
 ```
 
-## 6. utils 
 
 
