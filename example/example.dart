@@ -1,9 +1,6 @@
 import 'package:awesome_flutter_widgets/awesome_flutter_widgets.dart';
-import 'package:awesome_flutter_widgets/widgets/custom_animated_icons.dart';
-import 'package:awesome_flutter_widgets/widgets/custom_dialog.dart';
-import 'package:awesome_flutter_widgets/widgets/custom_fab.dart';
-import 'package:awesome_flutter_widgets/widgets/ellipsis_text.dart';
 import 'package:flutter/material.dart';
+import 'package:icon_animated/widgets/icon_animated.dart';
 
 void main() {
   runApp(const MyApp());
@@ -98,7 +95,7 @@ class _MyHomePageState extends State<MyHomePage>
                   child: const Text("Save"),
                 ),
               ),
-              CustomAnimatedIcons(
+              IconAnimated(
                 color: Colors.green,
                 progress: _animation,
                 size: 40,

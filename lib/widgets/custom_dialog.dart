@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'custom_animated_icons.dart';
+import 'package:icon_animated/widgets/icon_animated.dart';
 
 class CustomDialog {
   static dialog({
@@ -126,7 +125,7 @@ class _CustomDialogWidgetState extends State<CustomDialogWidget>
                 height: widget.topToTitleGap ?? 16,
               ),
               widget.iconTitle ?? false
-                  ? CustomAnimatedIcons(
+                  ? IconAnimated(
                       color: widget.primaryColor ?? Colors.black,
                       progress: _animation,
                       size: 36,

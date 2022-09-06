@@ -1,3 +1,7 @@
+## 0.2.0
+* remove animated_icon
+* See more information https://pub.dev/packages/icon_animated
+
 ## 0.1.0
 * release 0.1.0 
 * edit ReadMe
