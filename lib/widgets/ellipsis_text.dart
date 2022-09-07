@@ -4,7 +4,7 @@ class EllipsisText extends StatefulWidget {
   const EllipsisText({
     Key? key,
     required this.text,
-    this.style = const TextStyle(color: Colors.black),
+    this.style,
     required this.ellipsis,
     this.maxWidth = double.infinity,
     this.minWidth = 0,
@@ -72,34 +72,54 @@ class _EllipsisTextState extends State<EllipsisText> {
       textDirection: widget.textDirection ?? TextDirection.ltr,
     )..layout(minWidth: widget.minWidth, maxWidth: widget.maxWidth);
 
-    return widget.isShowMore ?? true
-        ? InkWell(
-            splashFactory: widget.splashFactory,
-            onTap: () {
-              setState(() {
-                isSmallContent = !isSmallContent;
-              });
-            },
-            child: AnimatedCrossFade(
-              duration: const Duration(milliseconds: 300),
-              crossFadeState: isSmallContent
-                  ? CrossFadeState.showFirst
-                  : CrossFadeState.showSecond,
-              firstChild: CustomPaint(
-                  size: Size(
-                      textPainter.size.width,
-                      getTextLineHeight(
-                          style: widget.style ??
-                              const TextStyle(color: Colors.black),
-                          lines: widget.maxLines)),
-                  painter: EllipsisTextPainter(
-                    text: TextSpan(text: widget.text, style: widget.style),
-                    ellipsis: widget.ellipsis,
-                    maxLines: widget.maxLines,
-                  )),
-              secondChild: Text(widget.text, style: widget.style),
-            ),
-          )
+    return widget.isShowMore ?? false
+        ? LayoutBuilder(builder: (context, size) {
+            var span = TextSpan(
+              text: widget.text,
+              style: widget.style,
+            );
+
+            var tp = TextPainter(
+              maxLines: widget.maxLines,
+              textAlign: TextAlign.left,
+              textDirection: TextDirection.ltr,
+              text: span,
+            );
+
+            tp.layout(maxWidth: size.maxWidth);
+
+            var exceeded = tp.didExceedMaxLines;
+
+            return exceeded
+                ? InkWell(
+                    splashFactory: widget.splashFactory,
+                    onTap: () {
+                      setState(() {
+                        isSmallContent = !isSmallContent;
+                      });
+                    },
+                    child: AnimatedCrossFade(
+                      duration: const Duration(milliseconds: 300),
+                      crossFadeState: isSmallContent
+                          ? CrossFadeState.showFirst
+                          : CrossFadeState.showSecond,
+                      firstChild: CustomPaint(
+                          size: Size(
+                              textPainter.size.width,
+                              getTextLineHeight(
+                                  style: widget.style ?? const TextStyle(),
+                                  lines: widget.maxLines)),
+                          painter: EllipsisTextPainter(
+                            text: TextSpan(
+                                text: widget.text, style: widget.style),
+                            ellipsis: widget.ellipsis,
+                            maxLines: widget.maxLines,
+                          )),
+                      secondChild: Text(widget.text, style: widget.style),
+                    ),
+                  )
+                : Text(widget.text, style: widget.style);
+          })
         : CustomPaint(
             size: textPainter.size,
             painter: EllipsisTextPainter(

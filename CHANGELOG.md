@@ -1,3 +1,7 @@
+## 0.2.1
+* Bugfix ellipsis_text
+* Removed stretch when text does not exceed maxLine
+
 ## 0.2.0
 * remove animated_icon
 * See more information https://pub.dev/packages/icon_animated
