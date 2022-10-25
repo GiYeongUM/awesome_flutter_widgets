@@ -11,6 +11,7 @@ class CustomDialog {
     Color? primaryColor,
     bool? canGoBack,
     double? radius,
+    double? width,
     double? insetPadding,
     double? topToTitleGap,
     double? titleToContentGap,
@@ -31,6 +32,7 @@ class CustomDialog {
           widgets: widgets,
           canGoBack: canGoBack,
           radius: radius,
+          width: width,
           insetPadding: insetPadding,
           topToTitleGap: topToTitleGap,
           contentToButtonGap: contentToButtonGap,
@@ -53,6 +55,7 @@ class CustomDialogWidget extends StatefulWidget {
   final Widget? widgets;
   final bool? canGoBack;
   final double? radius;
+  final double? width;
   final double? insetPadding;
   final double? topToTitleGap;
   final double? titleToContentGap;
@@ -72,6 +75,7 @@ class CustomDialogWidget extends StatefulWidget {
       this.insetPadding,
       this.titleStyle,
       this.radius,
+      this.width,
       this.contentStyle,
       this.contentToButtonGap,
       this.titleToContentGap,
@@ -114,6 +118,7 @@ class _CustomDialogWidgetState extends State<CustomDialogWidget>
         insetPadding:
             EdgeInsets.symmetric(horizontal: widget.insetPadding ?? 56),
         child: Container(
+          width: widget.width,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(widget.radius ?? 8.0),
           ),

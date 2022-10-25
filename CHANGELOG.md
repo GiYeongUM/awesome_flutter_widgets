@@ -1,3 +1,6 @@
+## 0.3.0
+* add widget width on customDialog
+
 ## 0.2.1
 * Bugfix ellipsis_text
 * Removed stretch when text does not exceed maxLine
