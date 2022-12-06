@@ -9,6 +9,10 @@ checkEmailRegex({required String email}) {
       .hasMatch(email);
 }
 
+checkPhoneNumberRegex({required String phoneNumber}) {
+  return RegExp(r'^010-?([0-9]{4})-?([0-9]{4})$').hasMatch(phoneNumber);
+}
+
 /// 닉네임 정규표현식 한글, 영문, 숫자, 공백 최소 최대치
 checkNickNameRegex(
     {required String nickName, required int min, required int max}) {

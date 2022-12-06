@@ -1,3 +1,9 @@
+## 0.4.0
+* add phone validator
+
+## 0.3.1
+* fix widget customDialog titleContentGap
+
 ## 0.3.0
 * add widget width on customDialog
 
