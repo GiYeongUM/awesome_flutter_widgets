@@ -33,6 +33,7 @@ class CustomDialog {
           canGoBack: canGoBack,
           radius: radius,
           width: width,
+          titleToContentGap: titleToContentGap,
           insetPadding: insetPadding,
           topToTitleGap: topToTitleGap,
           contentToButtonGap: contentToButtonGap,
