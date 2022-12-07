@@ -181,8 +181,13 @@ class _SaveSnackBarFirstWidgetState extends State<SaveSnackBarFirstWidget>
     _animation = Tween<double>(begin: 0, end: 1).animate(CurvedAnimation(
         parent: _animationController, curve: Curves.easeInOutCirc));
     _handleAnimation();
-
     super.initState();
+  }
+
+  @override
+  dispose() {
+    _animationController.dispose(); // you need this
+    super.dispose();
   }
 
   void _handleAnimation() {
@@ -331,6 +336,12 @@ class _SaveSnackBarSecondWidgetState extends State<SaveSnackBarSecondWidget>
     super.initState();
   }
 
+  @override
+  dispose() {
+    _animationController.dispose(); // you need this
+    super.dispose();
+  }
+
   void _handleAnimation() {
     Future.delayed(const Duration(milliseconds: 300), () {
       _showAnimation();
@@ -460,6 +471,12 @@ class _FailSnackBarFirstWidgetState extends State<FailSnackBarFirstWidget>
     _handleAnimation();
 
     super.initState();
+  }
+
+  @override
+  dispose() {
+    _animationController.dispose(); // you need this
+    super.dispose();
   }
 
   void _handleAnimation() {
@@ -608,6 +625,12 @@ class _FailSnackBarSecondWidgetState extends State<FailSnackBarSecondWidget>
     super.initState();
   }
 
+  @override
+  dispose() {
+    _animationController.dispose(); // you need this
+    super.dispose();
+  }
+
   void _handleAnimation() {
     Future.delayed(const Duration(milliseconds: 300), () {
       _showIcon();
@@ -738,6 +761,12 @@ class _AlertSnackBarFirstWidgetState extends State<AlertSnackBarFirstWidget>
     _handleAnimation();
 
     super.initState();
+  }
+
+  @override
+  dispose() {
+    _animationController.dispose(); // you need this
+    super.dispose();
   }
 
   void _handleAnimation() {
@@ -884,6 +913,12 @@ class _AlertSnackBarSecondWidgetState extends State<AlertSnackBarSecondWidget>
         parent: _animationController, curve: Curves.easeInOutCirc));
     _handleAnimation();
     super.initState();
+  }
+
+  @override
+  dispose() {
+    _animationController.dispose(); // you need this
+    super.dispose();
   }
 
   void _handleAnimation() {
