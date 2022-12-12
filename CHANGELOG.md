@@ -1,3 +1,7 @@
+## 0.5.0
+* add Korean on time util
+* fix word on time util
+
 ## 0.4.1
 * Animated Snack bar bugfix
 
