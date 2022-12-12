@@ -36,7 +36,7 @@ checkPasswordRegex(
 timeAgo({required DateTime dateTime, bool numericDates = true}) {
   final dateNow = DateTime.now();
   final difference = dateNow.difference(dateTime);
-  final isKr= (Platform.localeName == 'ko_KR');
+  final isKr = (Platform.localeName == 'ko_KR');
   if (difference.inDays >= 364) {
     return (difference.inDays ~/ 364) == 1
         ? '1 ${isKr ? '년 전' : 'year ago'}'
