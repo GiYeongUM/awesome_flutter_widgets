@@ -10,7 +10,7 @@ awesome flutter widgets
 - custom_dialog
 - custom_fab
 - animated_snack_bar
-- and some utils (regex, timeAgo..)
+- and some utils (regex, timeAgo, thousandToK)
 
 ## ⚡ [Installation](https://flutter.dev/docs/development/packages-and-plugins/using-packages)
 
